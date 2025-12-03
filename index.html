@@ -2,17 +2,17 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>AI 时代的中小学教育：深度洞察报告</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     
-    <!-- Chosen Palette: Warm Neutrals & Deep Teal -->
-    <!-- Content Strategy: 
-         - Enriched 'reportDetails' with deep academic insights from the provided PDFs (arXiv, Frontiers, US Dept Ed).
-         - Added "Critical Reflection" blocks to modal content to provoke thought.
-         - Expanded specific definitions (e.g., Cognitive Offloading, Stealth Assessment).
+    <!-- Fixes Applied:
+         1. Added explicit CSS Keyframes for 'fadeIn' to prevent "invisible content" issue.
+         2. Added a JS-controlled Loading Overlay to give immediate feedback.
+         3. Enforced explicit heights for Chart containers on mobile to prevent layout thrashing.
+         4. Wrapped Chart initialization in window.onload with safety timeout.
     -->
 
     <style>
@@ -23,9 +23,47 @@
             background-color: #f8f7f4;
             color: #2d3748;
             -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
-        /* Navigation Styling */
+        /* --- Loading Screen --- */
+        #app-loader {
+            position: fixed;
+            inset: 0;
+            background-color: #ffffff;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #319795;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- Animations --- */
+        /* Crucial Fix: Define the animation that was missing/broken */
+        .animate-fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0; /* Start hidden */
+            transform: translateY(10px);
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Navigation --- */
         .nav-item { white-space: nowrap; }
         .nav-item.active {
             border-bottom: 3px solid #319795;
@@ -34,30 +72,33 @@
             background-color: white;
         }
 
-        /* Chart Containers */
+        /* --- Chart Containers (Mobile Safe) --- */
         .chart-container {
             position: relative;
             width: 100%;
             margin: 0 auto;
         }
-        @media (max-width: 640px) { .chart-container { height: 250px; } }
-        @media (min-width: 641px) { .chart-container { height: 320px; max-width: 600px; } }
+        @media (max-width: 640px) { 
+            .chart-container { 
+                height: 280px !important; /* Force height on mobile */
+                min-height: 280px;
+            } 
+        }
+        @media (min-width: 641px) { 
+            .chart-container { 
+                height: 350px; 
+                max-width: 600px; 
+            } 
+        }
 
-        /* Interactive Card Styling */
+        /* --- Interactive Card Styling --- */
         .clickable-card {
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
             position: relative;
         }
-        @media (min-width: 768px) {
-            .clickable-card:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 10px 15px -3px rgba(49, 151, 149, 0.15), 0 4px 6px -2px rgba(49, 151, 149, 0.1);
-                border-color: #81e6d9;
-            }
-        }
         .clickable-card:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
             background-color: #f0fdFa;
         }
 
@@ -71,7 +112,7 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Modal Typography */
+        /* --- Deep Dive Modal Styles --- */
         .modal-prose h4 { color: #2d3748; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; font-size: 1.1em; }
         .modal-prose p { margin-bottom: 1em; line-height: 1.7; color: #4a5568; }
         .modal-prose li { margin-bottom: 0.5em; color: #4a5568; }
@@ -82,6 +123,7 @@
             padding: 1rem;
             margin: 1.5rem 0;
             border-radius: 0 0.5rem 0.5rem 0;
+            font-size: 0.95em;
         }
         .reflection-title {
             color: #6b46c1;
@@ -112,6 +154,13 @@
 </head>
 <body class="flex flex-col min-h-screen bg-gray-50">
 
+    <!-- Loading Screen -->
+    <div id="app-loader">
+        <div class="loader-spinner mb-4"></div>
+        <div class="text-teal-700 font-bold text-sm tracking-wide">报告加载中...</div>
+        <div class="text-gray-400 text-xs mt-2">优化移动端体验</div>
+    </div>
+
     <!-- Sticky Header -->
     <header class="bg-white shadow-sm sticky top-0 z-40 border-b border-gray-200">
         <div class="max-w-7xl mx-auto">
@@ -140,13 +189,14 @@
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full relative">
 
-        <div class="sm:hidden mb-4 flex items-center bg-blue-50/80 p-3 rounded-lg border border-blue-100">
-            <i class="fas fa-hand-pointer text-blue-500 mr-3 animate-pulse"></i>
+        <!-- Mobile Hint -->
+        <div class="sm:hidden mb-4 flex items-center bg-blue-50/80 p-3 rounded-lg border border-blue-100 shadow-sm animate-fade-in" style="animation-delay: 0.2s">
+            <i class="fas fa-hand-pointer text-blue-500 mr-3"></i>
             <p class="text-xs text-blue-800">点击页面卡片，解锁深度学术分析。</p>
         </div>
 
         <!-- SECTION 1: OVERVIEW -->
-        <section id="overview" class="space-y-6 animate-fade-in">
+        <section id="overview" class="space-y-6 animate-fade-in" style="animation-delay: 0.1s">
             <div class="bg-white rounded-2xl shadow-sm p-5 sm:p-8 border-t-4 border-teal-500 relative overflow-hidden">
                 <div class="absolute top-0 right-0 p-4 opacity-5">
                     <i class="fas fa-network-wired text-9xl"></i>
@@ -160,7 +210,7 @@
                     <div class="flex flex-wrap gap-2 mb-6">
                         <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-[10px] sm:text-xs font-medium border border-gray-200">Microsoft 2025</span>
                         <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-[10px] sm:text-xs font-medium border border-gray-200">US Dept of Ed</span>
-                        <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-[10px] sm:text-xs font-medium border border-gray-200">arXiv:2503.00079</span>
+                        <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-[10px] sm:text-xs font-medium border border-gray-200">arXiv:2503</span>
                     </div>
 
                     <div class="grid grid-cols-2 gap-3 bg-teal-50/50 rounded-xl p-3 border border-teal-100">
@@ -432,24 +482,41 @@
 
     </main>
 
-    <!-- Deep Dive Modal -->
+    <!-- Deep Dive Modal (Mobile Optimized) -->
     <div id="detailModal" class="fixed inset-0 z-50 hidden flex items-center justify-center sm:items-center items-end bg-black/50 backdrop-blur-sm transition-opacity duration-300">
         <div class="bg-white w-full sm:max-w-xl sm:rounded-2xl rounded-t-2xl shadow-2xl flex flex-col max-h-[90vh] sm:max-h-[80vh] transform transition-transform duration-300 translate-y-full sm:translate-y-10 scale-95 opacity-0" id="modalContent">
-            <div class="w-full flex justify-center pt-3 pb-1 sm:hidden"><div class="w-12 h-1.5 bg-gray-300 rounded-full"></div></div>
+            
+            <!-- Mobile Swipe Handle -->
+            <div class="w-full flex justify-center pt-3 pb-1 sm:hidden">
+                <div class="w-12 h-1.5 bg-gray-300 rounded-full"></div>
+            </div>
+
+            <!-- Header -->
             <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-start bg-white sm:rounded-t-2xl">
                 <h3 class="text-lg font-bold text-gray-900 pr-4 leading-tight" id="modalTitle">详情</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-full bg-gray-50"><i class="fas fa-times text-lg"></i></button>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-full bg-gray-50">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
             </div>
-            <div class="p-6 overflow-y-auto modal-prose text-sm" id="modalBody"></div>
+            
+            <!-- Body -->
+            <div class="p-6 overflow-y-auto modal-prose text-sm" id="modalBody">
+                <!-- Content injected via JS -->
+            </div>
+            
+            <!-- Footer -->
             <div class="px-6 py-4 border-t border-gray-100 bg-gray-50 sm:rounded-b-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs text-gray-500 gap-3 sm:gap-0">
                 <span id="modalSource" class="font-medium text-teal-700"></span>
-                <button onclick="closeModal()" class="w-full sm:w-auto px-6 py-2.5 bg-teal-600 text-white rounded-lg font-medium active:bg-teal-700 transition-colors shadow-sm">关闭</button>
+                <button onclick="closeModal()" class="w-full sm:w-auto px-6 py-2.5 bg-teal-600 text-white rounded-lg font-medium active:bg-teal-700 transition-colors shadow-sm">
+                    关闭
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Data & Script -->
     <script>
+        // Enriched Data Source
         const reportDetails = {
             "stat_efficiency": {
                 title: "AI 提升教师行政效率：超越'省时'",
@@ -741,6 +808,24 @@
             { id: "shift_resources", title: "学习资源", from: "标准化教材", to: "生成式内容", desc: "实时生成的差异化与文化响应性内容。", icon: "fas fa-book-open" }
         ];
 
+        // --- Init Logic ---
+        // Force Loader and wait for DOM + Timeout
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('app-loader');
+            
+            // Render logic
+            renderShifts();
+            
+            // Safety timeout for Chart.js on mobile
+            setTimeout(() => {
+                renderSentimentChart();
+                
+                // Hide loader
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+            }, 800);
+        });
+
         // --- Interaction Logic ---
         let currentTab = 'overview';
 
@@ -753,31 +838,33 @@
             document.getElementById(tabId).classList.remove('hidden');
             document.getElementById(`nav-${tabId}`).classList.add('active');
 
-            if(tabId === 'overview') setTimeout(renderSentimentChart, 100);
             if(tabId === 'literacy') setTimeout(renderLiteracyChart, 100);
 
             const navBtn = document.getElementById(`nav-${tabId}`);
-            navBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            if (navBtn) navBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
 
         function renderShifts() {
             const container = document.getElementById('shift-container');
-            container.innerHTML = shiftsData.map(shift => `
-                <div class="clickable-card bg-white rounded-xl shadow-sm p-4 border-l-4 border-gray-200 hover:border-teal-500 group" onclick="openDetail('${shift.id}')">
-                    <div class="flex items-center mb-3">
-                        <i class="${shift.icon} text-xl text-teal-600 mr-3 transition-transform group-hover:scale-110"></i>
-                        <h3 class="text-base font-bold text-gray-800">${shift.title}</h3>
+            if(container) {
+                container.innerHTML = shiftsData.map(shift => `
+                    <div class="clickable-card bg-white rounded-xl shadow-sm p-4 border-l-4 border-gray-200 hover:border-teal-500 group" onclick="openDetail('${shift.id}')">
+                        <div class="flex items-center mb-3">
+                            <i class="${shift.icon} text-xl text-teal-600 mr-3 transition-transform group-hover:scale-110"></i>
+                            <h3 class="text-base font-bold text-gray-800">${shift.title}</h3>
+                        </div>
+                        <div class="flex items-center justify-between text-xs mb-3 bg-gray-50 p-2 rounded-lg">
+                            <div class="text-gray-400 line-through decoration-red-300 w-1/2 pr-1 border-r border-gray-200 truncate">${shift.from}</div>
+                            <div class="text-teal-700 font-bold w-1/2 pl-2 text-right truncate">${shift.to}</div>
+                        </div>
+                        <p class="text-xs text-gray-500 line-clamp-2">${shift.desc}</p>
+                        <div class="click-indicator mt-2 text-[10px] text-teal-500 font-medium text-right">展开 ></div>
                     </div>
-                    <div class="flex items-center justify-between text-xs mb-3 bg-gray-50 p-2 rounded-lg">
-                        <div class="text-gray-400 line-through decoration-red-300 w-1/2 pr-1 border-r border-gray-200 truncate">${shift.from}</div>
-                        <div class="text-teal-700 font-bold w-1/2 pl-2 text-right truncate">${shift.to}</div>
-                    </div>
-                    <p class="text-xs text-gray-500 line-clamp-2">${shift.desc}</p>
-                    <div class="click-indicator mt-2 text-[10px] text-teal-500 font-medium text-right">展开 ></div>
-                </div>
-            `).join('');
+                `).join('');
+            }
         }
 
+        // Modal Logic
         function openDetail(id) {
             const data = reportDetails[id];
             if (!data) return;
@@ -793,7 +880,7 @@
             void modal.offsetWidth;
             
             modal.classList.remove('items-end', 'sm:items-center');
-            modal.classList.add('flex');
+            modal.classList.add('flex'); // Flex to center or bottom align
 
             content.classList.remove('translate-y-full', 'scale-95', 'opacity-0');
             content.classList.add('translate-y-0', 'scale-100', 'opacity-100');
@@ -818,13 +905,15 @@
             if (e.target === document.getElementById('detailModal')) closeModal();
         });
 
-        // --- Charts ---
+        // Charts
         let sentimentChart = null;
         let literacyChart = null;
 
         function renderSentimentChart() {
-            if (sentimentChart) return;
-            const ctx = document.getElementById('sentimentChart').getContext('2d');
+            const ctxEl = document.getElementById('sentimentChart');
+            if (!ctxEl || sentimentChart) return;
+            
+            const ctx = ctxEl.getContext('2d');
             sentimentChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -853,8 +942,10 @@
         }
 
         function renderLiteracyChart() {
-            if (literacyChart) return;
-            const ctx = document.getElementById('literacyChart').getContext('2d');
+            const ctxEl = document.getElementById('literacyChart');
+            if (!ctxEl || literacyChart) return;
+
+            const ctx = ctxEl.getContext('2d');
             literacyChart = new Chart(ctx, {
                 type: 'radar',
                 data: {
@@ -881,12 +972,6 @@
                 }
             });
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderShifts();
-            renderSentimentChart();
-        });
-
     </script>
 </body>
 </html>
