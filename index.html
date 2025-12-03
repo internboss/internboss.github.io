@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>AI 时代的中小学教育：深度洞察报告</title>
+    <title>AI 时代的中小学教育：全景深度报告</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     
-    <!-- Fixes Applied:
-         1. Added explicit CSS Keyframes for 'fadeIn' to prevent "invisible content" issue.
-         2. Added a JS-controlled Loading Overlay to give immediate feedback.
-         3. Enforced explicit heights for Chart containers on mobile to prevent layout thrashing.
-         4. Wrapped Chart initialization in window.onload with safety timeout.
+    <!-- 
+      Deep Content Update Strategy:
+      1. Shifts Tab: Implemented "Inverted Bloom's Taxonomy" logic and "Stealth Assessment" details.
+      2. Literacy Tab: Structured by "Functional vs Critical" literacy (arXiv:2503) and specific K-12 progression.
+      3. Challenges Tab: Added "Digital Divide 3.0" (Capability Gap) and "Algorithmic Audit" concepts.
+      4. UI: Enhanced readability in modals with specific class blocks (concept, tension, action).
     -->
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap');
         
         body {
             font-family: 'Noto Sans SC', sans-serif;
             background-color: #f8f7f4;
             color: #2d3748;
             -webkit-tap-highlight-color: transparent;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
 
         /* --- Loading Screen --- */
@@ -49,19 +50,12 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* --- Animations --- */
-        /* Crucial Fix: Define the animation that was missing/broken */
         .animate-fade-in {
             animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0; /* Start hidden */
+            opacity: 0;
             transform: translateY(10px);
         }
-        
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
 
         /* --- Navigation --- */
         .nav-item { white-space: nowrap; }
@@ -72,84 +66,54 @@
             background-color: white;
         }
 
-        /* --- Chart Containers (Mobile Safe) --- */
-        .chart-container {
-            position: relative;
-            width: 100%;
-            margin: 0 auto;
-        }
-        @media (max-width: 640px) { 
-            .chart-container { 
-                height: 280px !important; /* Force height on mobile */
-                min-height: 280px;
-            } 
-        }
-        @media (min-width: 641px) { 
-            .chart-container { 
-                height: 350px; 
-                max-width: 600px; 
-            } 
-        }
-
-        /* --- Interactive Card Styling --- */
+        /* --- Interactive Elements --- */
         .clickable-card {
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
             position: relative;
         }
-        .clickable-card:active {
-            transform: scale(0.97);
-            background-color: #f0fdFa;
+        .clickable-card:active { transform: scale(0.98); }
+        @media (min-width: 768px) {
+            .clickable-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 15px -3px rgba(49, 151, 149, 0.15);
+                border-color: #81e6d9;
+            }
         }
+        
+        /* Slider Styling */
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #319795; cursor: pointer; margin-top: -10px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #cbd5e0; border-radius: 2px; }
 
-        /* Indicators */
-        .click-indicator { opacity: 0; transition: opacity 0.3s; }
-        @media (min-width: 768px) { .clickable-card:hover .click-indicator { opacity: 1; } }
-        @media (max-width: 767px) { 
-            .click-indicator { opacity: 1; font-size: 0.7rem; color: #319795; } 
+        /* --- Chart Containers --- */
+        .chart-container { position: relative; width: 100%; margin: 0 auto; }
+        @media (max-width: 640px) { .chart-container { height: 280px !important; } }
+        @media (min-width: 641px) { .chart-container { height: 350px; max-width: 600px; } }
+
+        /* --- Deep Dive Content Styling (Rich Typography) --- */
+        .modal-body h4 {
+            color: #2c5282; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; font-size: 1.1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.25rem; display: flex; align-items: center;
         }
+        .modal-body p { margin-bottom: 1rem; line-height: 1.8; color: #4a5568; font-size: 0.95rem; }
+        .modal-body ul { list-style: none; margin-bottom: 1.5rem; padding-left: 0.5rem; }
+        .modal-body li { position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; color: #4a5568; }
+        .modal-body li::before { content: "\f054"; font-family: "Font Awesome 5 Free"; font-weight: 900; position: absolute; left: 0; color: #319795; font-size: 0.7rem; top: 0.4rem; }
+        
+        /* Semantic Content Blocks */
+        .concept-box { background-color: #ebf8ff; border-left: 4px solid #4299e1; padding: 1rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; }
+        .concept-title { font-weight: bold; color: #2b6cb0; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+        
+        .tension-box { background-color: #fff5f5; border-left: 4px solid #fc8181; padding: 1rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; }
+        .tension-title { font-weight: bold; color: #c53030; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+
+        .action-box { background-color: #f0fff4; border: 1px solid #c6f6d5; padding: 1rem; border-radius: 0.5rem; margin-top: 1.5rem; }
+        .action-title { font-weight: bold; color: #2f855a; font-size: 0.9rem; margin-bottom: 0.5rem; display: flex; align-items: center; }
+
+        .quote-italic { font-family: 'Merriweather', serif; font-style: italic; color: #718096; border-left: 3px solid #cbd5e0; padding-left: 1rem; margin: 1rem 0; background: #f7fafc; padding: 1rem; border-radius: 0 4px 4px 0; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* --- Deep Dive Modal Styles --- */
-        .modal-prose h4 { color: #2d3748; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; font-size: 1.1em; }
-        .modal-prose p { margin-bottom: 1em; line-height: 1.7; color: #4a5568; }
-        .modal-prose li { margin-bottom: 0.5em; color: #4a5568; }
-        
-        .reflection-block {
-            background-color: #faf5ff;
-            border-left: 4px solid #805ad5;
-            padding: 1rem;
-            margin: 1.5rem 0;
-            border-radius: 0 0.5rem 0.5rem 0;
-            font-size: 0.95em;
-        }
-        .reflection-title {
-            color: #6b46c1;
-            font-weight: 700;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .detail-bullet {
-            position: relative;
-            padding-left: 1.2em;
-        }
-        .detail-bullet::before {
-            content: "\f054"; 
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            color: #319795;
-            font-size: 0.7em;
-            top: 0.4em;
-        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-50">
@@ -157,11 +121,10 @@
     <!-- Loading Screen -->
     <div id="app-loader">
         <div class="loader-spinner mb-4"></div>
-        <div class="text-teal-700 font-bold text-sm tracking-wide">报告加载中...</div>
-        <div class="text-gray-400 text-xs mt-2">优化移动端体验</div>
+        <div class="text-teal-700 font-bold text-sm tracking-wide">深度报告加载中...</div>
     </div>
 
-    <!-- Sticky Header -->
+    <!-- Header -->
     <header class="bg-white shadow-sm sticky top-0 z-40 border-b border-gray-200">
         <div class="max-w-7xl mx-auto">
             <div class="px-4 py-3 sm:px-6 lg:px-8 flex justify-between items-center">
@@ -171,806 +134,742 @@
                     </div>
                     <div>
                         <h1 class="text-lg sm:text-xl font-bold text-gray-800 tracking-tight leading-none">AI 时代的中小学教育</h1>
-                        <p class="text-[10px] sm:text-xs text-gray-500 mt-0.5">2025 综合深度报告</p>
+                        <p class="text-[10px] sm:text-xs text-gray-500 mt-0.5">2025 深度洞察报告</p>
                     </div>
                 </div>
             </div>
             <div class="border-t border-gray-100 overflow-x-auto no-scrollbar bg-gray-50/50 backdrop-blur-sm">
                 <nav class="flex px-4 sm:px-6 min-w-full space-x-2 py-2">
-                    <button onclick="navigate('overview')" id="nav-overview" class="nav-item active flex-shrink-0 rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium text-gray-600 transition-all border border-transparent">综述与趋势</button>
-                    <button onclick="navigate('shifts')" id="nav-shifts" class="nav-item flex-shrink-0 rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium text-gray-600 transition-all border border-transparent">教育范式转变</button>
-                    <button onclick="navigate('literacy')" id="nav-literacy" class="nav-item flex-shrink-0 rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium text-gray-600 transition-all border border-transparent">AI 素养框架</button>
-                    <button onclick="navigate('challenges')" id="nav-challenges" class="nav-item flex-shrink-0 rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium text-gray-600 transition-all border border-transparent">挑战与伦理</button>
+                    <button onclick="navigate('overview')" id="nav-overview" class="nav-item active flex-shrink-0 rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium text-gray-600 transition-all border border-transparent">核心洞察</button>
+                    <button onclick="navigate('simulation')" id="nav-simulation" class="nav-item flex-shrink-0 rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium text-gray-600 transition-all border border-transparent"><i class="fas fa-flask mr-1"></i>模拟实验</button>
+                    <button onclick="navigate('shifts')" id="nav-shifts" class="nav-item flex-shrink-0 rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium text-gray-600 transition-all border border-transparent">范式转变</button>
+                    <button onclick="navigate('literacy')" id="nav-literacy" class="nav-item flex-shrink-0 rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium text-gray-600 transition-all border border-transparent">素养框架</button>
+                    <button onclick="navigate('challenges')" id="nav-challenges" class="nav-item flex-shrink-0 rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium text-gray-600 transition-all border border-transparent">风险护栏</button>
                 </nav>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full relative">
 
-        <!-- Mobile Hint -->
-        <div class="sm:hidden mb-4 flex items-center bg-blue-50/80 p-3 rounded-lg border border-blue-100 shadow-sm animate-fade-in" style="animation-delay: 0.2s">
-            <i class="fas fa-hand-pointer text-blue-500 mr-3"></i>
-            <p class="text-xs text-blue-800">点击页面卡片，解锁深度学术分析。</p>
-        </div>
-
         <!-- SECTION 1: OVERVIEW -->
-        <section id="overview" class="space-y-6 animate-fade-in" style="animation-delay: 0.1s">
+        <section id="overview" class="space-y-6 animate-fade-in">
+            <!-- Hero with Insights -->
             <div class="bg-white rounded-2xl shadow-sm p-5 sm:p-8 border-t-4 border-teal-500 relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-4 opacity-5">
-                    <i class="fas fa-network-wired text-9xl"></i>
-                </div>
                 <div class="relative z-10">
-                    <span class="inline-block px-2 py-1 bg-teal-100 text-teal-700 rounded text-[10px] font-bold tracking-wider mb-2">核心洞察</span>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">AI 作为“认知脚手架”</h2>
+                    <span class="inline-block px-2 py-1 bg-teal-100 text-teal-700 rounded text-[10px] font-bold tracking-wider mb-2">综合结论</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 leading-tight">从“替代恐惧”到“能力增强”</h2>
                     <p class="text-gray-600 leading-relaxed mb-4 text-sm sm:text-lg">
-                        教育正经历从“数字化”向“智能化”的跃迁。US Dept of Ed 报告将此定义为<b>“人在回路 (Human-in-the-loop)”</b>的社会技术系统重构——AI 负责自动化与预测，人类负责判断与关怀。
+                        综合 Microsoft 2025、US Dept of Ed 及学术综述，我们正处于教育史上最大的<strong>社会技术系统重构</strong>。核心结论不再是“AI 是否会取代教师”，而是“未掌握 AI 协作能力的教育系统将通过<strong>马太效应</strong>被淘汰”。
                     </p>
-                    <div class="flex flex-wrap gap-2 mb-6">
+                    <div class="flex flex-wrap gap-2 mb-4">
                         <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-[10px] sm:text-xs font-medium border border-gray-200">Microsoft 2025</span>
                         <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-[10px] sm:text-xs font-medium border border-gray-200">US Dept of Ed</span>
                         <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-[10px] sm:text-xs font-medium border border-gray-200">arXiv:2503</span>
                     </div>
-
-                    <div class="grid grid-cols-2 gap-3 bg-teal-50/50 rounded-xl p-3 border border-teal-100">
-                        <div class="clickable-card p-2 rounded hover:bg-white/80 transition-colors" onclick="openDetail('stat_efficiency')">
-                            <div class="text-[10px] sm:text-xs text-gray-500 mb-1">教师行政效率</div>
-                            <div class="flex items-baseline">
-                                <span class="text-xl sm:text-2xl font-bold text-teal-700">30%</span>
-                                <i class="fas fa-arrow-up text-xs text-teal-500 ml-1"></i>
-                            </div>
-                            <div class="click-indicator text-[10px] mt-1 text-teal-600 flex items-center">
-                                <span>深度解析</span> <i class="fas fa-chevron-right ml-1 text-[8px]"></i>
-                            </div>
-                        </div>
-                        <div class="clickable-card p-2 rounded hover:bg-white/80 transition-colors" onclick="openDetail('stat_adoption')">
-                            <div class="text-[10px] sm:text-xs text-gray-500 mb-1">早期采用满意度</div>
-                            <div class="flex items-baseline">
-                                <span class="text-xl sm:text-2xl font-bold text-teal-700">82%</span>
-                            </div>
-                             <div class="click-indicator text-[10px] mt-1 text-teal-600 flex items-center">
-                                <span>现状分析</span> <i class="fas fa-chevron-right ml-1 text-[8px]"></i>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
+            <!-- Stats & Pillars -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="clickable-card bg-white p-5 rounded-xl shadow-sm border border-gray-100" onclick="openDetail('pillar_personalized')">
-                    <div class="flex items-center sm:block mb-2">
-                        <div class="h-10 w-10 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 mr-3 sm:mr-0 sm:mb-4 shrink-0">
-                            <i class="fas fa-fingerprint text-lg"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800">规模化因材施教</h3>
+                <div class="clickable-card bg-white p-5 rounded-xl shadow-sm border border-gray-100" onclick="openDetail('stat_efficiency')">
+                    <div class="flex justify-between items-start mb-2">
+                         <div class="h-10 w-10 bg-teal-100 rounded-lg flex items-center justify-center text-teal-600"><i class="fas fa-clock"></i></div>
+                         <span class="bg-green-100 text-green-800 text-[10px] px-2 py-1 rounded-full">高影响力</span>
                     </div>
-                    <p class="text-sm text-gray-500 line-clamp-2 sm:line-clamp-none">超越“千人一面”。详解 ITS 智能辅导系统与开放学习者模型。</p>
-                    <div class="click-indicator mt-3 flex items-center text-xs text-indigo-500 font-medium">
-                        展开阅读 <i class="fas fa-arrow-right ml-1"></i>
-                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-1">30%</div>
+                    <div class="text-sm text-gray-500">行政时间释放</div>
+                    <div class="mt-3 text-xs text-teal-600 font-medium">点击深度解析：杰文斯悖论 ></div>
                 </div>
-                
-                <div class="clickable-card bg-white p-5 rounded-xl shadow-sm border border-gray-100" onclick="openDetail('pillar_copilot')">
-                    <div class="flex items-center sm:block mb-2">
-                        <div class="h-10 w-10 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600 mr-3 sm:mr-0 sm:mb-4 shrink-0">
-                            <i class="fas fa-rocket text-lg"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800">教师效能增强</h3>
-                    </div>
-                    <p class="text-sm text-gray-500 line-clamp-2 sm:line-clamp-none">AI 不是替代者，而是“副驾驶”。释放教师进行高价值的社会情感互动。</p>
-                    <div class="click-indicator mt-3 flex items-center text-xs text-emerald-500 font-medium">
-                        展开阅读 <i class="fas fa-arrow-right ml-1"></i>
-                    </div>
+                 <div class="clickable-card bg-white p-5 rounded-xl shadow-sm border border-gray-100" onclick="openDetail('pillar_personalized')">
+                    <div class="h-10 w-10 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 mb-3"><i class="fas fa-fingerprint"></i></div>
+                    <h3 class="font-bold text-gray-800 mb-1">规模化因材施教</h3>
+                    <div class="text-xs text-gray-500">ITS 与开放学习者模型</div>
+                    <div class="mt-3 text-xs text-indigo-600 font-medium">点击查看：技术实现逻辑 ></div>
                 </div>
-
                 <div class="clickable-card bg-white p-5 rounded-xl shadow-sm border border-gray-100" onclick="openDetail('pillar_literacy')">
-                    <div class="flex items-center sm:block mb-2">
-                        <div class="h-10 w-10 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 mr-3 sm:mr-0 sm:mb-4 shrink-0">
-                            <i class="fas fa-brain text-lg"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800">新核心素养</h3>
-                    </div>
-                    <p class="text-sm text-gray-500 line-clamp-2 sm:line-clamp-none">从 Coding 到 Prompting。为什么“人机协作能力”将决定未来阶层？</p>
-                    <div class="click-indicator mt-3 flex items-center text-xs text-orange-500 font-medium">
-                        展开阅读 <i class="fas fa-arrow-right ml-1"></i>
-                    </div>
+                    <div class="h-10 w-10 bg-orange-100 rounded-lg flex items-center justify-center text-orange-600 mb-3"><i class="fas fa-brain"></i></div>
+                    <h3 class="font-bold text-gray-800 mb-1">素养定义重构</h3>
+                    <div class="text-xs text-gray-500">从 Coding 到 Context</div>
+                    <div class="mt-3 text-xs text-orange-600 font-medium">点击查看：arXiv 新框架 ></div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Charts -->
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-base sm:text-lg font-bold text-gray-800">教育者与学生视角</h3>
-                        <button class="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded text-gray-600 transition-colors" onclick="openDetail('chart_sentiment_detail')">
-                            <i class="fas fa-info-circle mr-1"></i>数据解读
-                        </button>
+                        <h3 class="text-base font-bold text-gray-800">感知错位：学生 vs 教师</h3>
+                        <button class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600 hover:bg-gray-200" onclick="openDetail('chart_sentiment_detail')"><i class="fas fa-search-plus mr-1"></i>深度解读</button>
                     </div>
                     <div class="chart-container">
                         <canvas id="sentimentChart"></canvas>
                     </div>
                 </div>
-
                 <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 flex flex-col justify-center">
-                    <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-4">共识：三大必要转变</h3>
-                    <ul class="space-y-3">
-                        <li class="clickable-card p-3 rounded-lg border border-transparent bg-gray-50/50 hover:bg-teal-50 flex items-start" onclick="openDetail('finding_role')">
-                            <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-teal-100 text-teal-600 rounded-full mr-3 mt-0.5 text-xs font-bold">1</span>
+                    <h3 class="text-base font-bold text-gray-800 mb-4">关键发现 (Key Findings)</h3>
+                    <ul class="space-y-4">
+                        <li class="clickable-card p-3 rounded-lg bg-gray-50 flex items-start group" onclick="openDetail('finding_role')">
+                            <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-teal-100 text-teal-600 rounded-full mr-3 text-xs font-bold group-hover:bg-teal-600 group-hover:text-white transition-colors">1</span>
                             <div>
-                                <h4 class="text-sm font-bold text-gray-900">角色的重新定义</h4>
-                                <p class="text-xs text-gray-500 mt-1">从知识传授到“学习编排 (Orchestration)”。</p>
+                                <h4 class="text-sm font-bold text-gray-900 group-hover:text-teal-700">“人在回路” (Human-in-the-loop)</h4>
+                                <p class="text-xs text-gray-500 mt-1">不仅是监督，更是注入人类价值观与关怀。</p>
                             </div>
-                            <i class="fas fa-chevron-right text-gray-300 ml-auto self-center text-xs"></i>
                         </li>
-                        <li class="clickable-card p-3 rounded-lg border border-transparent bg-gray-50/50 hover:bg-teal-50 flex items-start" onclick="openDetail('finding_assessment')">
-                            <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-teal-100 text-teal-600 rounded-full mr-3 mt-0.5 text-xs font-bold">2</span>
+                        <li class="clickable-card p-3 rounded-lg bg-gray-50 flex items-start group" onclick="openDetail('finding_assessment')">
+                            <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-teal-100 text-teal-600 rounded-full mr-3 text-xs font-bold group-hover:bg-teal-600 group-hover:text-white transition-colors">2</span>
                             <div>
-                                <h4 class="text-sm font-bold text-gray-900">评估的结构性改革</h4>
-                                <p class="text-xs text-gray-500 mt-1">从论文到过程，引入隐形评估。</p>
+                                <h4 class="text-sm font-bold text-gray-900 group-hover:text-teal-700">过程性评估的崛起</h4>
+                                <p class="text-xs text-gray-500 mt-1">终结性评价（如论文）失效，转向思维路径追踪。</p>
                             </div>
-                            <i class="fas fa-chevron-right text-gray-300 ml-auto self-center text-xs"></i>
-                        </li>
-                        <li class="clickable-card p-3 rounded-lg border border-transparent bg-gray-50/50 hover:bg-teal-50 flex items-start" onclick="openDetail('finding_ethics')">
-                            <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-teal-100 text-teal-600 rounded-full mr-3 mt-0.5 text-xs font-bold">3</span>
-                            <div>
-                                <h4 class="text-sm font-bold text-gray-900">从技术到伦理</h4>
-                                <p class="text-xs text-gray-500 mt-1">重点是“代理权”与“算法偏见”。</p>
-                            </div>
-                            <i class="fas fa-chevron-right text-gray-300 ml-auto self-center text-xs"></i>
                         </li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 2: SHIFTS -->
-        <section id="shifts" class="hidden space-y-6 animate-fade-in">
+        <!-- SECTION 2: SIMULATIONS -->
+        <section id="simulation" class="hidden space-y-6 animate-fade-in">
             <div class="text-center max-w-3xl mx-auto mb-6">
-                <h2 class="text-xl sm:text-2xl font-bold text-gray-900">教育范式的根本性重构</h2>
-                <p class="text-sm text-gray-500 mt-2 px-4">对比“工厂模式”与“AI 增强模式”。点击卡片查看具体的场景变革。</p>
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-900">交互式理论验证</h2>
+                <p class="text-sm text-gray-500 mt-2 px-4">亲手调节参数，体验学术论文中的核心张力模型。</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="shift-container"></div>
 
-            <div class="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl p-5 border border-indigo-100 clickable-card mt-6" onclick="openDetail('shift_cognitive')">
-                <div class="flex items-start">
-                    <div class="bg-white p-2 rounded-full shadow-sm mr-3 shrink-0">
-                         <i class="fas fa-lightbulb text-indigo-500 text-xl"></i>
-                    </div>
+            <!-- SIM 1: Cognitive Offloading -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="bg-indigo-600 p-4 text-white flex justify-between items-center">
                     <div>
-                        <h3 class="font-bold text-indigo-900 mb-1 text-sm sm:text-base">深度争议：认知卸载 (Cognitive Offloading)</h3>
-                        <p class="text-xs sm:text-sm text-indigo-800 leading-relaxed opacity-90">
-                            AI 究竟是“大脑的自行车”还是“大脑的轮椅”？arXiv 论文 2503.00079 详细探讨了“有益卸载”与“有害依赖”的边界。点击深入了解。
-                        </p>
+                        <h3 class="font-bold flex items-center"><i class="fas fa-balance-scale mr-2"></i> 认知卸载 (Cognitive Offloading)</h3>
+                        <p class="text-indigo-200 text-xs mt-1">基于 arXiv:2503.00079 | 理论：Desirable Difficulties (必要困难)</p>
                     </div>
                 </div>
-                 <div class="absolute bottom-3 right-3 text-indigo-400 text-xs">
-                    <i class="fas fa-arrow-right"></i>
+                <div class="p-6">
+                    <p class="text-xs text-gray-500 mb-4">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        <strong>实验目标：</strong> 调节 AI 对学习任务的介入程度，观察“效率”与“认知深度”的非线性关系。
+                    </p>
+                    <div class="mb-6 bg-gray-50 p-4 rounded-lg">
+                        <div class="flex justify-between text-sm font-bold text-gray-700 mb-2">
+                            <span>AI 介入程度</span>
+                            <span id="sliderVal" class="text-indigo-600">50% (协作)</span>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" id="aiSlider" oninput="updateOffloadingSim(this.value)">
+                        <div class="flex justify-between text-[10px] text-gray-400 mt-1">
+                            <span>0% (纯手写)</span>
+                            <span>50% (Copilot)</span>
+                            <span>100% (全自动)</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="p-4 rounded-lg text-center border transition-all" id="effBox">
+                            <div class="text-xs text-gray-500 uppercase tracking-wide mb-1">任务完成效率</div>
+                            <div class="text-2xl font-bold text-gray-700" id="effScore">--</div>
+                        </div>
+                        <div class="p-4 rounded-lg text-center border transition-all" id="cogBox">
+                            <div class="text-xs text-gray-500 uppercase tracking-wide mb-1">大脑认知训练量</div>
+                            <div class="text-2xl font-bold text-gray-700" id="cogScore">--</div>
+                        </div>
+                    </div>
+
+                    <div class="text-sm text-gray-700 min-h-[60px] flex items-center bg-white border-l-4 border-indigo-400 pl-4 py-2" id="simFeedback">
+                        拖动滑块开始实验...
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIM 2: Risk Guardrails -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="bg-gray-800 p-4 text-white">
+                    <h3 class="font-bold flex items-center"><i class="fas fa-shield-alt mr-2"></i> 风险护栏沙盘</h3>
+                    <p class="text-gray-400 text-xs mt-1">基于 US Dept of Ed 伦理框架 | 场景决策模拟</p>
+                </div>
+                <div class="p-6">
+                    <p class="text-sm text-gray-600 mb-4 font-medium">点击以下场景，判定其风险等级并获取政策建议：</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
+                        <button onclick="assessRisk('grading')" class="px-2 py-3 rounded-lg bg-gray-50 text-xs font-bold hover:bg-teal-50 hover:text-teal-700 border border-gray-200 transition-all">📝 自动评分</button>
+                        <button onclick="assessRisk('admission')" class="px-2 py-3 rounded-lg bg-gray-50 text-xs font-bold hover:bg-teal-50 hover:text-teal-700 border border-gray-200 transition-all">🎓 录取预测</button>
+                        <button onclick="assessRisk('tutor')" class="px-2 py-3 rounded-lg bg-gray-50 text-xs font-bold hover:bg-teal-50 hover:text-teal-700 border border-gray-200 transition-all">🧮 数学辅导</button>
+                        <button onclick="assessRisk('surveillance')" class="px-2 py-3 rounded-lg bg-gray-50 text-xs font-bold hover:bg-teal-50 hover:text-teal-700 border border-gray-200 transition-all">👀 专注度监控</button>
+                    </div>
+                    
+                    <div id="riskResult" class="hidden animate-fade-in bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <!-- Populated by JS -->
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 3: LITERACY -->
+        <!-- SECTION 3: SHIFTS -->
+        <section id="shifts" class="hidden space-y-6 animate-fade-in">
+            <div class="text-center max-w-3xl mx-auto mb-6">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-900">教育范式的根本性重构</h2>
+                <p class="text-sm text-gray-500 mt-2 px-4">从“标准化工厂”到“自适应生态”。以下是四大核心维度的深度对比。</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="shift-container"></div>
+            
+             <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 clickable-card group" onclick="openDetail('shift_cognitive')">
+                <div class="flex items-start">
+                    <div class="bg-white p-2 rounded-full mr-3 text-indigo-500 group-hover:scale-110 transition-transform"><i class="fas fa-book-reader"></i></div>
+                    <div>
+                        <h3 class="font-bold text-indigo-900 text-sm">核心争议：认知卸载 (Cognitive Offloading)</h3>
+                        <p class="text-xs text-indigo-700 mt-1">arXiv 2503: 我们是否正在培养“无能”的一代？点击查看“有益卸载”与“有害依赖”的学术界定。</p>
+                    </div>
+                    <i class="fas fa-chevron-right text-indigo-400 ml-auto mt-1"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: LITERACY -->
         <section id="literacy" class="hidden space-y-6 animate-fade-in">
             <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
                 <div class="flex flex-col md:flex-row gap-8 items-center">
                     <div class="w-full md:w-1/2">
-                        <div class="mb-4">
-                            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">AI 素养三维框架</h2>
-                            <p class="text-xs sm:text-sm text-gray-500">基于 ACM & arXiv 综述，超越单纯的工具使用。</p>
-                        </div>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2">AI 素养：三维新框架</h2>
+                        <p class="text-xs text-gray-500 mb-4 leading-relaxed">基于 ACM & arXiv 2503。素养不再等同于“会写代码”，而是理解系统、批判输出与社会责任。</p>
                         <div class="space-y-3">
-                            <div class="clickable-card p-3 sm:p-4 rounded-lg border border-gray-100 bg-gray-50/50 hover:bg-teal-50 flex justify-between items-center" onclick="openDetail('lit_tech')">
+                            <div class="clickable-card p-3 rounded-lg border border-gray-100 bg-gray-50/50 hover:bg-teal-50 flex justify-between items-center group" onclick="openDetail('lit_tech')">
                                 <div>
                                     <div class="font-bold text-teal-800 text-sm">1. 技术维度 (Technical)</div>
-                                    <div class="text-xs text-gray-500 mt-1">祛魅：数据训练与概率本质</div>
+                                    <div class="text-xs text-gray-500 mt-1">祛魅：理解“概率预测”而非“真理”</div>
                                 </div>
-                                <i class="fas fa-cogs text-teal-200 text-xl"></i>
+                                <i class="fas fa-cogs text-teal-200 text-xl group-hover:text-teal-500 transition-colors"></i>
                             </div>
-                            <div class="clickable-card p-3 sm:p-4 rounded-lg border border-gray-100 bg-gray-50/50 hover:bg-teal-50 flex justify-between items-center" onclick="openDetail('lit_critical')">
+                            <div class="clickable-card p-3 rounded-lg border border-gray-100 bg-gray-50/50 hover:bg-teal-50 flex justify-between items-center group" onclick="openDetail('lit_critical')">
                                 <div>
                                     <div class="font-bold text-teal-800 text-sm">2. 批判维度 (Critical)</div>
                                     <div class="text-xs text-gray-500 mt-1">鉴别幻觉、偏见与过度依赖</div>
                                 </div>
-                                <i class="fas fa-search text-teal-200 text-xl"></i>
+                                <i class="fas fa-search text-teal-200 text-xl group-hover:text-teal-500 transition-colors"></i>
                             </div>
-                            <div class="clickable-card p-3 sm:p-4 rounded-lg border border-gray-100 bg-gray-50/50 hover:bg-teal-50 flex justify-between items-center" onclick="openDetail('lit_socio')">
+                            <div class="clickable-card p-3 rounded-lg border border-gray-100 bg-gray-50/50 hover:bg-teal-50 flex justify-between items-center group" onclick="openDetail('lit_socio')">
                                 <div>
                                     <div class="font-bold text-teal-800 text-sm">3. 社会文化维度 (Socio)</div>
                                     <div class="text-xs text-gray-500 mt-1">代理权、伦理与人机关系</div>
                                 </div>
-                                <i class="fas fa-users text-teal-200 text-xl"></i>
+                                <i class="fas fa-users text-teal-200 text-xl group-hover:text-teal-500 transition-colors"></i>
                             </div>
                         </div>
                     </div>
                     <div class="w-full md:w-1/2 flex flex-col items-center">
                         <div class="w-full flex justify-end mb-2">
-                             <button class="text-[10px] text-teal-600 bg-teal-50 px-2 py-1 rounded border border-teal-100" onclick="openDetail('chart_literacy_detail')">
-                                <i class="fas fa-info-circle mr-1"></i>图表说明
-                            </button>
+                             <button class="text-[10px] text-teal-600 bg-teal-50 px-2 py-1 rounded border border-teal-100 hover:bg-teal-100" onclick="openDetail('chart_literacy_detail')"><i class="fas fa-info-circle mr-1"></i>图表说明</button>
                         </div>
                         <div class="chart-container">
                             <canvas id="literacyChart"></canvas>
                         </div>
-                        <p class="text-[10px] text-center text-gray-400 mt-2 max-w-xs">理想课程权重：侧重于批判性思维与应用，而非底层代码实现。</p>
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            
+            <!-- Curriculum Progression -->
+             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="clickable-card bg-white p-4 rounded-xl shadow-sm border-l-4 border-green-400" onclick="openDetail('curr_elem')">
                     <div class="flex justify-between items-start">
                         <h4 class="font-bold text-gray-800 text-sm mb-1">小学 (K-5)</h4>
                         <i class="fas fa-child text-green-200"></i>
                     </div>
-                    <p class="text-xs text-gray-600">重点：体验与感知。<br>区分生物智能与机器智能。</p>
-                    <div class="click-indicator mt-2 text-[10px] text-green-600 font-bold text-right">查看教学建议 ></div>
+                    <p class="text-xs text-gray-600">重点：体验与感知。<br>活动：Teachable Machine</p>
+                    <div class="mt-2 text-[10px] text-green-600 font-bold text-right">查看活动 ></div>
                 </div>
                 <div class="clickable-card bg-white p-4 rounded-xl shadow-sm border-l-4 border-blue-400" onclick="openDetail('curr_middle')">
                     <div class="flex justify-between items-start">
                         <h4 class="font-bold text-gray-800 text-sm mb-1">初中 (6-8)</h4>
                          <i class="fas fa-microchip text-blue-200"></i>
                     </div>
-                    <p class="text-xs text-gray-600">重点：逻辑与伦理。<br>数据如何变成模型？</p>
-                    <div class="click-indicator mt-2 text-[10px] text-blue-600 font-bold text-right">查看教学建议 ></div>
+                    <p class="text-xs text-gray-600">重点：逻辑与伦理。<br>活动：算法偏见模拟</p>
+                    <div class="mt-2 text-[10px] text-blue-600 font-bold text-right">查看活动 ></div>
                 </div>
                 <div class="clickable-card bg-white p-4 rounded-xl shadow-sm border-l-4 border-purple-400" onclick="openDetail('curr_high')">
                     <div class="flex justify-between items-start">
                         <h4 class="font-bold text-gray-800 text-sm mb-1">高中 (9-12)</h4>
                         <i class="fas fa-project-diagram text-purple-200"></i>
                     </div>
-                    <p class="text-xs text-gray-600">重点：创造与项目。<br>使用 LLM 解决复杂问题。</p>
-                    <div class="click-indicator mt-2 text-[10px] text-purple-600 font-bold text-right">查看教学建议 ></div>
+                    <p class="text-xs text-gray-600">重点：创造与微调。<br>活动：RAG 应用构建</p>
+                    <div class="mt-2 text-[10px] text-purple-600 font-bold text-right">查看活动 ></div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 4: CHALLENGES -->
+        <!-- SECTION 5: CHALLENGES -->
         <section id="challenges" class="hidden space-y-6 animate-fade-in">
             <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
                 <div class="flex items-start">
                     <i class="fas fa-exclamation-triangle text-yellow-500 mt-0.5 mr-3 shrink-0"></i>
                     <div>
                         <h3 class="text-sm font-bold text-yellow-800">系统性风险警示</h3>
-                        <p class="text-xs text-yellow-700 mt-1">
-                            US Dept of Ed 强调：缺乏“护栏 (Guardrails)”的 AI 可能加剧不平等。技术本身不会自动带来公平，必须通过政策和设计来干预。
-                        </p>
+                        <p class="text-xs text-yellow-700 mt-1">US Dept of Ed 强调：技术本身不会自动带来公平。缺乏设计的 AI 引入将加剧<strong>马太效应</strong>（富者越富）。</p>
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="clickable-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 flex items-start" onclick="openDetail('chal_cheating')">
-                    <div class="h-10 w-10 bg-red-50 rounded-lg flex items-center justify-center text-red-500 text-lg mr-3 shrink-0"><i class="fas fa-file-excel"></i></div>
-                    <div class="flex-grow">
-                        <h3 class="text-sm font-bold text-gray-900 mb-1">学术诚信危机</h3>
-                        <p class="text-xs text-gray-500 line-clamp-2">检测器已失效。如何设计“AI 免疫”或“AI 融合”的评估？</p>
-                        <div class="click-indicator mt-2 text-[10px] text-red-500 font-medium flex justify-end items-center">深度策略 <i class="fas fa-chevron-right ml-1"></i></div>
-                    </div>
-                </div>
-                <div class="clickable-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 flex items-start" onclick="openDetail('chal_privacy')">
-                    <div class="h-10 w-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-500 text-lg mr-3 shrink-0"><i class="fas fa-user-shield"></i></div>
-                    <div class="flex-grow">
-                        <h3 class="text-sm font-bold text-gray-900 mb-1">数据隐私 (PII)</h3>
-                        <p class="text-xs text-gray-500 line-clamp-2">学生数据是否会训练商业模型？“围墙花园”与本地化部署。</p>
-                        <div class="click-indicator mt-2 text-[10px] text-blue-500 font-medium flex justify-end items-center">详情 <i class="fas fa-chevron-right ml-1"></i></div>
-                    </div>
-                </div>
-                <div class="clickable-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 flex items-start" onclick="openDetail('chal_bias')">
-                    <div class="h-10 w-10 bg-purple-50 rounded-lg flex items-center justify-center text-purple-500 text-lg mr-3 shrink-0"><i class="fas fa-balance-scale-right"></i></div>
-                    <div class="flex-grow">
-                        <h3 class="text-sm font-bold text-gray-900 mb-1">算法偏见与定型</h3>
-                        <p class="text-xs text-gray-500 line-clamp-2">AI 可能固化刻板印象。绝不能让算法单独决定学生命运。</p>
-                        <div class="click-indicator mt-2 text-[10px] text-purple-500 font-medium flex justify-end items-center">详情 <i class="fas fa-chevron-right ml-1"></i></div>
-                    </div>
-                </div>
-                <div class="clickable-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 flex items-start" onclick="openDetail('chal_divide')">
-                    <div class="h-10 w-10 bg-green-50 rounded-lg flex items-center justify-center text-green-500 text-lg mr-3 shrink-0"><i class="fas fa-wifi"></i></div>
-                    <div class="flex-grow">
-                        <h3 class="text-sm font-bold text-gray-900 mb-1">数字鸿沟 2.0</h3>
-                        <p class="text-xs text-gray-500 line-clamp-2">马太效应：富人使用 AI 增强能力，穷人被 AI 管理。</p>
-                        <div class="click-indicator mt-2 text-[10px] text-green-500 font-medium flex justify-end items-center">详情 <i class="fas fa-chevron-right ml-1"></i></div>
-                    </div>
-                </div>
-                 <div class="clickable-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 flex items-start" onclick="openDetail('chal_teacher')">
-                    <div class="h-10 w-10 bg-orange-50 rounded-lg flex items-center justify-center text-orange-500 text-lg mr-3 shrink-0"><i class="fas fa-chalkboard-teacher"></i></div>
-                    <div class="flex-grow">
-                        <h3 class="text-sm font-bold text-gray-900 mb-1">教师准备度断层</h3>
-                        <p class="text-xs text-gray-500 line-clamp-2">仅 20% 教师有信心。亟需 TPACK 框架下的新培训。</p>
-                        <div class="click-indicator mt-2 text-[10px] text-orange-500 font-medium flex justify-end items-center">详情 <i class="fas fa-chevron-right ml-1"></i></div>
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="challenge-container">
+                <!-- Populated via JS -->
             </div>
         </section>
 
     </main>
 
-    <!-- Deep Dive Modal (Mobile Optimized) -->
+    <!-- Deep Dive Modal -->
     <div id="detailModal" class="fixed inset-0 z-50 hidden flex items-center justify-center sm:items-center items-end bg-black/50 backdrop-blur-sm transition-opacity duration-300">
-        <div class="bg-white w-full sm:max-w-xl sm:rounded-2xl rounded-t-2xl shadow-2xl flex flex-col max-h-[90vh] sm:max-h-[80vh] transform transition-transform duration-300 translate-y-full sm:translate-y-10 scale-95 opacity-0" id="modalContent">
-            
-            <!-- Mobile Swipe Handle -->
-            <div class="w-full flex justify-center pt-3 pb-1 sm:hidden">
-                <div class="w-12 h-1.5 bg-gray-300 rounded-full"></div>
-            </div>
-
-            <!-- Header -->
+        <div class="bg-white w-full sm:max-w-xl sm:rounded-2xl rounded-t-2xl shadow-2xl flex flex-col max-h-[90vh] sm:max-h-[85vh] transform transition-transform duration-300 translate-y-full sm:translate-y-10 scale-95 opacity-0" id="modalContent">
+            <div class="w-full flex justify-center pt-3 pb-1 sm:hidden"><div class="w-12 h-1.5 bg-gray-300 rounded-full"></div></div>
             <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-start bg-white sm:rounded-t-2xl">
                 <h3 class="text-lg font-bold text-gray-900 pr-4 leading-tight" id="modalTitle">详情</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-full bg-gray-50">
-                    <i class="fas fa-times text-lg"></i>
-                </button>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-full bg-gray-50"><i class="fas fa-times text-lg"></i></button>
             </div>
-            
-            <!-- Body -->
-            <div class="p-6 overflow-y-auto modal-prose text-sm" id="modalBody">
-                <!-- Content injected via JS -->
-            </div>
-            
-            <!-- Footer -->
+            <div class="p-6 overflow-y-auto modal-body" id="modalBody"></div>
             <div class="px-6 py-4 border-t border-gray-100 bg-gray-50 sm:rounded-b-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs text-gray-500 gap-3 sm:gap-0">
                 <span id="modalSource" class="font-medium text-teal-700"></span>
-                <button onclick="closeModal()" class="w-full sm:w-auto px-6 py-2.5 bg-teal-600 text-white rounded-lg font-medium active:bg-teal-700 transition-colors shadow-sm">
-                    关闭
-                </button>
+                <button onclick="closeModal()" class="w-full sm:w-auto px-6 py-2.5 bg-teal-600 text-white rounded-lg font-medium active:bg-teal-700 transition-colors shadow-sm">关闭</button>
             </div>
         </div>
     </div>
 
-    <!-- Data & Script -->
+    <!-- Logic -->
     <script>
-        // Enriched Data Source
+        // --- 1. Simulation Logic ---
+        function updateOffloadingSim(val) {
+            const v = parseInt(val);
+            const sliderText = document.getElementById('sliderVal');
+            const efficiency = Math.min(100, Math.floor(v * 0.9 + 10)); 
+            let cognitive;
+            
+            // Inverted U-Curve Logic for Learning
+            if (v <= 45) { cognitive = Math.floor(40 + (v * 1.2)); } 
+            else { cognitive = Math.floor(94 - ((v - 45) * 1.5)); }
+            if (cognitive < 10) cognitive = 10;
+
+            document.getElementById('effScore').innerText = efficiency;
+            document.getElementById('cogScore').innerText = cognitive;
+            
+            const effBox = document.getElementById('effBox');
+            const cogBox = document.getElementById('cogBox');
+            const feedback = document.getElementById('simFeedback');
+
+            effBox.className = `p-4 rounded-lg text-center border transition-all ${efficiency > 80 ? 'bg-green-50 border-green-200 text-green-700' : 'bg-gray-50 border-gray-200'}`;
+            cogBox.className = `p-4 rounded-lg text-center border transition-all ${cognitive > 80 ? 'bg-blue-50 border-blue-200 text-blue-700' : (cognitive < 40 ? 'bg-red-50 border-red-200 text-red-700' : 'bg-gray-50 border-gray-200')}`;
+
+            if (v < 20) {
+                sliderText.innerText = v + "% (纯人工)";
+                feedback.innerHTML = "<strong>低效区：</strong> 学生完全靠自己。思维深度足够，但耗时极长，容易产生挫败感，且无法接触高阶复杂问题。";
+            } else if (v >= 20 && v <= 60) {
+                sliderText.innerText = v + "% (协作)";
+                feedback.innerHTML = "<strong>学习甜点区 (Sweet Spot)：</strong> 符合“必要困难”理论。AI 承担记忆、检索等低阶负荷，保留逻辑构建和判断等高阶负荷。";
+            } else {
+                sliderText.innerText = v + "% (过度依赖)";
+                feedback.innerHTML = "<strong>认知萎缩区：</strong> AI 完成了思考过程。效率极高，但学生脑神经未受刺激。短期作业满分，长期能力退化。";
+            }
+        }
+        
+        function assessRisk(key) {
+            const data = riskDatabase[key];
+            const div = document.getElementById('riskResult');
+            let color = data.level === 'low' ? 'green' : (data.level === 'medium' ? 'yellow' : (data.level === 'high' ? 'orange' : 'red'));
+            div.className = `animate-fade-in mt-4 p-4 rounded-lg border border-${color}-200 bg-${color}-50`;
+            div.innerHTML = `<div class="flex items-center mb-2"><span class="px-2 py-0.5 rounded text-xs font-bold uppercase bg-${color}-200 text-${color}-800 mr-2">${data.level} Risk</span><h4 class="font-bold text-gray-800">${data.title}</h4></div><p class="text-sm text-gray-700 mb-3">${data.desc}</p><div class="text-xs font-bold text-gray-500 uppercase">必需护栏 (Guardrails)</div><p class="text-sm text-${color}-900 font-medium">${data.guardrail}</p>`;
+            div.classList.remove('hidden');
+        }
+
+        // --- 2. Deep Dive Content (ENRICHED) ---
         const reportDetails = {
             "stat_efficiency": {
-                title: "AI 提升教师行政效率：超越'省时'",
+                title: "教师效率：超越“省时”的质变",
                 content: `
-                    <p>Microsoft 2025 报告指出，职业倦怠是教师流失的首要原因。AI 的介入不仅是定量的“省时”，更是定性的“精力重分配”。</p>
-                    <h4>具体效能数据</h4>
-                    <ul>
-                        <li class="detail-bullet"><strong>30% 的时间释放：</strong> Copilot 等工具平均每周为教师节省 5-10 小时的低价值行政工作（如排课、基础数据录入、格式化教案）。</li>
-                        <li class="detail-bullet"><strong>反馈速度革命：</strong> AI 评分工具将反馈周期从平均 4-7 天缩短至几分钟，使学生能在记忆犹新时获得纠正。</li>
-                    </ul>
-                    <div class="reflection-block">
-                        <div class="reflection-title"><i class="fas fa-lightbulb mr-2"></i>深度思考：效率的悖论</div>
-                        <p>我们必须警惕“杰文斯悖论”：效率的提高可能导致任务量的增加。如果学校因为 AI 提高了批改效率，而要求教师布置双倍的作业，这将背离减负的初衷。<strong>目标应是“高接触 (High Touch)”而非“高产量”。</strong></p>
+                    <div class="concept-box">
+                        <span class="concept-title">核心数据</span>
+                        Microsoft 2025 报告指出，Copilot 工具平均每周为教师节省 <strong>5-10 小时</strong> 行政时间（排课、基础数据录入、初步评分）。
+                    </div>
+                    <h4>杰文斯悖论 (Jevons Paradox) 的风险</h4>
+                    <p>US Dept of Ed 提出警告：历史表明，当技术提高效率时，我们往往会增加工作量，而不是享受闲暇。如果学校仅仅因为 AI 批改快，就要求教师布置双倍作业，这将背离“减负”初衷。</p>
+                    <div class="action-box">
+                        <span class="action-title"><i class="fas fa-check-circle mr-2"></i>行动建议</span>
+                        学校应制定政策，明确将节省下来的时间用于 AI 无法完成的 <strong>High-touch (高接触)</strong> 活动，如一对一情感辅导和家校沟通。
                     </div>
                 `,
-                source: "Microsoft 2025 Report / Frontiers Review"
+                source: "Microsoft 2025 / US Dept of Ed"
             },
             "stat_adoption": {
-                title: "采用现状：兴奋与迷茫并存",
+                title: "采用现状：地下应用与代际鸿沟",
                 content: `
-                    <p>Frontiers 的系统性综述揭示了一个割裂的现状：草根层面的热情与制度层面的滞后。</p>
-                    <h4>关键发现</h4>
+                    <p>Frontiers 综述揭示了两个令人担忧的趋势：</p>
                     <ul>
-                        <li class="detail-bullet"><strong>地下应用 (Underground Usage)：</strong> 约 60% 的教师在没有明确学校政策的情况下“私下”使用 AI，这带来了数据隐私合规的隐患。</li>
-                        <li class="detail-bullet"><strong>学生领先于教师：</strong> 调查显示高中生在利用 AI 进行解释概念、编程辅助方面的熟练度往往超过其任课教师，导致课堂权力的微妙转移。</li>
+                        <li><strong>地下应用 (Underground Usage)：</strong> 约 60% 的教师在无明确政策指导下“私下”使用 AI。这带来了巨大的数据隐私合规隐患（PII 泄露）。</li>
+                        <li><strong>倒置的专业权威：</strong> 调查显示，高中生在利用 AI 解释复杂概念、生成代码方面的熟练度往往超过教师。教师不再是“知识掌握者”，甚至不再是“工具掌握者”。</li>
                     </ul>
-                    <div class="reflection-block">
-                        <div class="reflection-title"><i class="fas fa-question-circle mr-2"></i>制度反思</div>
-                        <p>单纯的“禁止”政策（如早期的纽约公立学校）已被证明无效。现在的挑战是：如何制定一种“允许但在边界内 (Permissible within Guardrails)”的灵活政策？</p>
+                    <div class="tension-box">
+                        <span class="tension-title">核心张力</span>
+                        封禁 AI 会导致学生在未来职场通过“影子 IT”落后；完全放开则面临作弊和隐私风险。
                     </div>
                 `,
                 source: "Frontiers Systematic Review"
             },
             "pillar_personalized": {
-                title: "规模化因材施教：智能辅导系统 (ITS)",
+                title: "ITS 与开放学习者模型 (OLM)",
                 content: `
-                    <p>US Dept of Ed 报告特别强调了 AI 在打破“平均主义”教育方面的潜力。传统课堂 1:30 的师生比使得个性化不仅昂贵，而且几乎不可能。</p>
-                    <h4>AI 的突破机制</h4>
-                    <ul>
-                        <li class="detail-bullet"><strong>开放学习者模型 (OLM)：</strong> AI 实时追踪学生的知识状态，不仅知道学生“错在哪”，还能推断“为什么错”（例如：是因为计算错误，还是概念误解）。</li>
-                        <li class="detail-bullet"><strong>脚手架 (Scaffolding) 生成：</strong> 针对学习困难学生，AI 自动拆解复杂问题；针对优等生，AI 自动生成拓展挑战。</li>
-                    </ul>
-                    <div class="reflection-block">
-                        <div class="reflection-title"><i class="fas fa-balance-scale mr-2"></i>公平性思考</div>
-                        <p>如果高质量的 AI 辅导系统只有私立学校负担得起，教育差距将进一步拉大。报告呼吁将 AI 辅导作为一种<strong>“数字基础设施”</strong>向所有公立学校提供。</p>
+                    <p>US Dept of Ed 报告将“适应性学习”列为 AI 的核心潜力。</p>
+                    <h4>技术原理：开放学习者模型</h4>
+                    <p>不同于传统的黑箱打分，AI 建立一个可视化的仪表盘（OLM），实时展示学生的知识图谱状态。它不仅知道学生“做错了”，还能推断“为什么错”（是计算失误，还是概念混淆？）。</p>
+                    <div class="action-box">
+                        <span class="action-title"><i class="fas fa-microchip mr-2"></i>实施案例</span>
+                        比如 Mathia 或 Khanmigo，它们在学生解题卡壳时，不是直接给答案，而是识别出学生缺乏“勾股定理”的前置知识，并自动推送相关的微课程进行补救。
                     </div>
                 `,
                 source: "US Dept of Ed - Future of Teaching and Learning"
             },
             "pillar_copilot": {
-                title: "教师角色重构：增强而非替代",
+                title: "Copilot：教师的外骨骼",
                 content: `
-                    <p>AI 不应被视为“机器教师”，而应被视为教师的“外骨骼 (Exoskeleton)”。</p>
-                    <h4>Copilot 的核心场景</h4>
-                    <ul>
-                        <li class="detail-bullet"><strong>创意生成伙伴：</strong> “帮我设计一个结合本地历史与物理力学的寻宝游戏。” AI 擅长发散思维，打破教师的创意枯竭。</li>
-                        <li class="detail-bullet"><strong>差异化内容改写：</strong> 一键将一篇复杂的科学文章改写为 3 个不同阅读难度版本（Lexile Levels），通过分层教学照顾不同能力的学生。</li>
-                    </ul>
-                    <div class="reflection-block">
-                        <div class="reflection-title"><i class="fas fa-user-shield mr-2"></i>教师主体性 (Teacher Agency)</div>
-                        <p>必须确保教师保留“否决权”。AI 生成的教案只是草稿，教师必须依据对班级文化的理解进行修改。<strong>“人在回路”不仅是监督，更是注入只有人类才懂的上下文。</strong></p>
-                    </div>
+                    <p class="quote-italic">“AI 不会取代教师，但使用 AI 的教师将取代不使用的教师。”</p>
+                    <h4>教师主体性 (Teacher Agency)</h4>
+                    <p>Microsoft 报告反复强调：AI 生成的教案、评语仅应作为<strong>“初稿 (First Draft)”</strong>。教师必须保留“否决权”和“修改权”。“人在回路”不仅是监督，更是注入只有人类才懂的上下文（如班级特定的文化梗、学生的家庭背景）。</p>
                 `,
-                source: "Microsoft 2025 / US Dept of Ed"
+                source: "Microsoft 2025"
             },
             "pillar_literacy": {
-                title: "新核心素养：从 'Code' 到 'Context'",
+                title: "AI 素养：定义重构",
                 content: `
-                    <p>arXiv 论文指出，AI 素养定义正在发生剧烈变化。过去主要指“编程能力”，现在则转向“与智能系统协作解决问题的能力”。</p>
-                    <h4>核心能力转移</h4>
+                    <p>arXiv 论文指出，AI 素养 (AI Literacy) 的定义已发生剧变。</p>
                     <ul>
-                        <li class="detail-bullet"><strong>提示工程 (Prompt Engineering) → 对话工程：</strong> 不仅仅是写一句指令，而是学会与 AI 进行多轮迭代，澄清意图，纠正 AI 的错误。</li>
-                        <li class="detail-bullet"><strong>系统思维：</strong> 理解 AI 系统的局限性，知道什么时候<strong>不</strong>该用 AI（例如涉及情感判断或极高风险决策时）。</li>
+                        <li><strong>1.0 时代 (2019前)：</strong> 侧重于 Coding 和算法原理（如神经网络怎么运作）。</li>
+                        <li><strong>2.0 时代 (2023后)：</strong> 侧重于 Interaction（提示工程）和 Evaluation（鉴别真伪）。</li>
                     </ul>
-                    <div class="reflection-block">
-                        <div class="reflection-title"><i class="fas fa-exclamation-triangle mr-2"></i>未来风险</div>
-                        <p>未来的文盲不是不会读写的人，而是<strong>“无批判地接受机器输出”</strong>的人。教育需重点培养一种“健康的怀疑主义 (Healthy Skepticism)”。</p>
+                    <div class="concept-box">
+                        <span class="concept-title">关键转变</span>
+                        从培养“计算机科学家”转向培养“智慧的 AI 用户”。未来的文盲不是不会写代码的人，而是<strong>“无批判地接受机器输出”</strong>的人。
                     </div>
                 `,
-                source: "arXiv:2503.00079 AI Literacy Review"
+                source: "arXiv:2503.00079"
             },
             "chart_sentiment_detail": {
-                title: "数据解读：师生认知的错位",
+                title: "数据解读：感知错位",
                 content: `
-                    <p>综合多份报告的调查数据，我们发现了有趣的代际差异。</p>
-                    <ul>
-                        <li class="detail-bullet"><strong>学生的务实主义：</strong> 学生普遍将 AI 视为一种“工具”或“伙伴”，不仅用于作弊，更多用于解释概念、润色语言。他们对 AI 的恐惧感远低于教师。</li>
-                        <li class="detail-bullet"><strong>教师的伦理焦虑：</strong> 教师最担心的不仅是作弊，而是<strong>“人际关系的疏离”</strong>。如果反馈是由 AI 写的，学生还会感受到老师的关怀吗？</li>
-                    </ul>
-                    <div class="reflection-block">
-                        <div class="reflection-title"><i class="fas fa-heart mr-2"></i>情感纽带</div>
-                        <p>数据表明，学生最看重老师的特质是“关心我 (Cares about me)”。这是 AI 无论如何进化都无法模拟的。教师应将节省下来的时间全部投入到建立师生关系中。</p>
-                    </div>
+                    <p>综合数据表明，学生和教师对 AI 的恐惧点完全不同。</p>
+                    <h4>学生的务实主义</h4>
+                    <p>学生主要将 AI 视为工具（Utility）。他们喜欢 AI 导师的“无评判性 (Non-judgmental)”——向 AI 提蠢问题不会感到羞耻。</p>
+                    <h4>教师的伦理焦虑</h4>
+                    <p>教师最担心的不是“饭碗”，而是<strong>“关系的异化”</strong>。如果评语是 AI 写给学生的，学生是 AI 写给老师的，教育中神圣的“人际连接”是否就此断裂？</p>
                 `,
                 source: "综合数据分析"
             },
             "finding_role": {
-                title: "发现 1：从“知识源”到“策展人”",
+                title: "角色重定义：学习编排者",
                 content: `
-                    <p>在信息稀缺时代，教师是知识的源头。在 AI 时代，知识是廉价的商品。教师的价值链上移。</p>
-                    <h4>新角色：学习编排者 (Orchestrator)</h4>
-                    <p>教师像指挥家一样，决定何时让 AI 介入，何时组织小组讨论，何时进行全班讲授。教师负责设计“学习体验”，而不仅仅是传递内容。</p>
+                    <p>当知识变得廉价（AI 可回答所有事实性问题），教师的价值链上移。</p>
+                    <h4>从“圣人”到“编排者” (Orchestrator)</h4>
+                    <p>教师像交响乐指挥家，决定何时让 AI 独奏（学生自学），何时进行全班合奏（讨论），何时进行独唱（人类指导）。教师的核心技能变为<strong>学习体验设计 (LXD)</strong>。</p>
                 `,
                 source: "US Dept of Ed"
             },
             "finding_assessment": {
-                title: "发现 2：评估的危机与重生",
+                title: "评估改革：终结性评价的消亡",
                 content: `
-                    <p>如果 AI 能通过图灵测试，传统的论文作业就失去了测量效度。</p>
-                    <h4>未来的评估形式</h4>
-                    <ul>
-                        <li class="detail-bullet"><strong>过程性评估：</strong> 要求学生提交与 AI 的对话记录，评估其提问的质量和修改的逻辑。</li>
-                        <li class="detail-bullet"><strong>逆向图灵测试：</strong> 让 AI 生成一篇有瑕疵的文章，任务是让学生找出错误并修正。这考察了比写作更高阶的批判能力。</li>
-                    </ul>
+                    <p>Essay 和家庭作业在 ChatGPT 面前已失效。</p>
+                    <h4>未来方向：隐形评估 (Stealth Assessment)</h4>
+                    <p>利用数字化学习过程中的数据流进行持续评估。当学生在沙盒中解决问题时，后台算法分析其策略选择、试错模式。评估不再是“周五的考试”，而是融入日常学习的背景中。</p>
                 `,
                 source: "Frontiers Review"
             },
-            "finding_ethics": {
-                title: "发现 3：伦理即生存技能",
-                content: `
-                    <p>ACM 报告强调，伦理不应是 CS 课的附加模块，而应贯穿始终。</p>
-                    <p>学生需要理解：算法推荐是如何通过多巴胺回路控制我们的注意力的？生成式 AI 的数据来源是否侵犯了艺术家的版权？这些讨论将培养学生成为负责任的数字公民。</p>
-                `,
-                source: "ACM Literacy Framework"
-            },
-            
-            // SHIFTS
             "shift_objective": {
-                title: "教学目标变革：布鲁姆分类法的倒置",
+                title: "教学目标：Bloom 分类法的倒置",
                 content: `
-                    <p>传统的底层能力（记忆、复述）易被 AI 替代。教育目标必须向金字塔顶端移动。</p>
-                    <p><strong>新目标：</strong> 综合（Synthesis）与创造（Creation）。不再问学生“法国大革命哪一年爆发”，而是问“如果 AI 管理当时的法国，历史会有什么不同？”</p>
+                    <p>在 AI 时代，Bloom 分类法的金字塔正在发生“倒置”或“扁平化”。</p>
+                    <ul>
+                        <li><strong>传统：</strong> 花费 80% 时间在底层（记忆、理解），20% 在顶层（应用、创造）。</li>
+                        <li><strong>AI 时代：</strong> 底层知识由 AI 随时检索。教育重心必须立即转移到顶层的<strong>“评价 (Evaluation)”</strong>和<strong>“创造 (Creation)”</strong>。</li>
+                    </ul>
+                    <div class="action-box">
+                        <span class="action-title">教学转变</span>
+                        不再问“二战哪一年爆发？”，而是问“如果 AI 管理当时的决策，能否避免二战？”
+                    </div>
                 `,
-                source: "Frontiers Review"
+                source: "Frontiers Systematic Review"
             },
             "shift_role": {
-                title: "教师角色：从讲台到侧畔",
+                title: "教师角色：从讲师到向导",
                 content: `
                     <p>"Guide on the Side" 取代 "Sage on the Stage"。</p>
-                    <p>在 AI 辅助的课堂中，教师不再需要长时间讲授基础知识（AI 视频或导师可以做得更好）。教师在教室内巡视，解决个别学生的卡点，进行情感辅导。这种<strong>“高频率微互动”</strong>是教学质量的关键。</p>
+                    <p>AI 可以提供标准化的讲课视频和实时问答。教师的不可替代性在于<strong>社会情感学习 (SEL)</strong> 和<strong>动机激励</strong>。只有人类教师能察觉学生眼中的迷茫，并给予情感上的鼓励。</p>
                 `,
                 source: "Microsoft 2025"
             },
             "shift_assessment": {
-                title: "评估方式：隐形评估 (Stealth Assessment)",
+                title: "评估方式：过程 > 结果",
                 content: `
-                    <p>US Dept of Ed 提倡利用数字化学习过程中的数据流进行评估。</p>
-                    <p>当学生在与 AI 互动解决问题时，后台算法正在分析其策略选择、试错模式和坚持程度。这种评估是<strong>无感知的、持续的</strong>，消除了“考试周”的焦虑，且更能反映真实能力。</p>
+                    <p>终结性评估（Summative Assessment）如论文、家庭作业，已彻底被生成式 AI 击穿。</p>
+                    <h4>解决方案：过程性记录</h4>
+                    <p>要求学生提交与 AI 的对话记录 (Prompt History)。评估标准不再是“最终文章写得有多好”，而是“你如何引导 AI 写出好文章”、“你如何修正 AI 的幻觉”。</p>
                 `,
                 source: "US Dept of Ed"
             },
             "shift_resources": {
-                title: "学习资源：生成式动态教材",
+                title: "学习资源：生成式与文化响应性",
                 content: `
-                    <p>静态教科书更新周期（3-5年）太慢。AI 可以实时将最新的科学发现（如昨天的火箭发射）转化为适合不同年级的阅读材料。</p>
-                    <p>此外，<strong>文化响应性内容</strong>成为可能：AI 可以将数学应用题的背景替换为学生熟悉的本地文化场景，增加学习的亲切感。</p>
+                    <p>教科书不再是静态的。AI 可以实现<strong>文化响应性教学 (Culturally Responsive Teaching)</strong>。</p>
+                    <p>例如：给喜欢足球的学生生成的物理题是关于“射门抛物线”的；给喜欢音乐的学生生成的物理题是关于“声波频率”的。这种个性化能显著提升学习动机。</p>
                 `,
-                source: "Microsoft / Frontiers"
+                source: "Microsoft 2025"
             },
             "shift_cognitive": {
-                title: "核心争议：认知卸载 (Cognitive Offloading)",
+                title: "学术辩论：认知卸载",
                 content: `
-                    <p>这是学术界争论最激烈的领域。arXiv 2503.00079 论文提供了深度分析。</p>
-                    <h4>有益卸载 vs 有害依赖</h4>
-                    <ul>
-                        <li class="detail-bullet"><strong>有益：</strong> 卸载低阶认知负荷（如记忆公式、拼写检查），释放大脑带宽用于高阶逻辑推理和创造性构思。</li>
-                        <li class="detail-bullet"><strong>有害：</strong> 卸载核心学习过程（如让 AI 直接生成论点结构）。如果学生跳过了“痛苦的思考过程”，神经连接就无法建立。</li>
-                    </ul>
-                    <div class="reflection-block">
-                        <div class="reflection-title"><i class="fas fa-brain mr-2"></i>教育者的挑战</div>
-                        <p>教师的新任务是设计<strong>“必要的困难 (Desirable Difficulties)”</strong>——明确规定哪些任务必须“赤手空拳”完成，以锻炼思维肌肉，哪些任务可以借助 AI 外骨骼。</p>
+                    <div class="tension-box">
+                        <span class="tension-title">核心辩题</span>
+                        使用 AI 是在“外包思维”导致大脑萎缩，还是在“释放带宽”以进行更高阶思考？
                     </div>
-                `,
-                source: "arXiv:2503.00079 Systematic Review"
-            },
-
-            // LITERACY
-            "chart_literacy_detail": {
-                title: "AI 素养权重解读",
-                content: `
-                    <p>雷达图展示了 ACM 和 UNESCO 建议的课程重心转移。</p>
-                    <ul>
-                        <li class="detail-bullet"><strong>技术原理 (20%)：</strong> 降低权重。不需要每个人都懂反向传播算法，但需理解“概率预测”的本质以祛魅。</li>
-                        <li class="detail-bullet"><strong>应用技能 (30%)：</strong> 增加权重。利用 LLM 解决实际问题的能力是新的生产力。</li>
-                        <li class="detail-bullet"><strong>批判与伦理 (50%)：</strong> 大幅增加。在 AI 幻觉和偏见常态化的时代，鉴别能力是生存技能。</li>
-                    </ul>
-                `,
-                source: "ACM / UNESCO Frameworks"
-            },
-            "lit_tech": {
-                title: "技术维度：理解 AI 的'黑箱'",
-                content: `
-                    <p>目标不是培养计算机科学家，而是培养“知情用户”。</p>
-                    <p><strong>关键概念：</strong> “Garbage in, Garbage out”。让学生理解 AI 的偏见不是机器有了意识，而是因为训练数据本身包含了人类社会的历史偏见。</p>
+                    <h4>理论模型：必要困难 (Desirable Difficulties)</h4>
+                    <p>arXiv 论文建议：教育者必须人为设定“无 AI 区”。例如，初学者必须“赤手空拳”练习基本算术或写作，以建立神经连接。只有在掌握基础后，才能引入 AI 作为加速器。过早引入 AI 会导致<strong>“能力退化 (Skill Atrophy)”</strong>。</p>
                 `,
                 source: "arXiv:2503.00079"
             },
-            "lit_critical": {
-                title: "批判维度：不要信任你的机器",
+            "lit_tech": {
+                title: "技术维度：祛魅 (Demystification)",
                 content: `
-                    <p>培养一种<strong>“验证性思维”</strong>。</p>
-                    <p><strong>课堂活动建议：</strong> “找茬游戏”。教师故意生成包含事实错误的 AI 文本（AI 幻觉），让学生利用可信信源进行核查和修正。</p>
+                    <p>不需要每个孩子都懂反向传播，但必须理解：</p>
+                    <ul>
+                        <li><strong>概率本质：</strong> LLM 是“概率接龙”，它不理解真理，只是预测下一个词。</li>
+                        <li><strong>数据依赖：</strong> “垃圾进，垃圾出”。AI 的偏见源于训练它的互联网数据。</li>
+                    </ul>
+                    <div class="action-box">
+                        <span class="action-title">教学目标</span>
+                        消除对 AI 的恐惧或盲目崇拜，将其还原为一种统计学工具。
+                    </div>
+                `,
+                source: "ACM Literacy"
+            },
+            "lit_critical": {
+                title: "批判维度：验证性思维",
+                content: `
+                    <p>ACM 框架建议：课堂活动应包含<strong>“找茬游戏”</strong>。教师故意生成包含事实错误或逻辑漏洞的 AI 文本，让学生去核查、修正。这培养了比写作更高阶的“编辑能力”和“鉴别能力”。</p>
                 `,
                 source: "ACM Literacy"
             },
             "lit_socio": {
-                title: "社会维度：代理权与就业",
+                title: "社会维度：代理权 (Agency)",
                 content: `
-                    <p><strong>代理权 (Agency)：</strong> 讨论推荐算法如何影响我们的选择？我们是在刷视频，还是视频在“刷”我们？</p>
-                    <p><strong>未来就业：</strong> 引导学生思考：哪些人类技能是 AI 难以替代的？（如复杂沟通、同理心、非结构化环境下的身体技能）。</p>
+                    <p>理解我们与算法的关系。推荐算法如何控制我们的注意力？生成式 AI 的版权归属？这些不仅仅是技术问题，更是未来的<strong>公民素养</strong>。学生需要意识到“算法不仅仅是代码，它是固化的观点”。</p>
                 `,
                 source: "ACM Literacy"
             },
             "curr_elem": {
                 title: "小学阶段 (K-5)：感知与体验",
                 content: `
-                    <p><strong>核心目标：</strong> 区分生物智能与人工智能。</p>
-                    <p><strong>活动：</strong> 使用 Teachable Machine 训练简单的图像分类器。讨论：智能音箱是像人一样思考，还是只是在匹配声音模式？</p>
+                    <div class="concept-box"><span class="concept-title">核心目标</span> 区分生物智能与机器智能。</div>
+                    <h4>活动建议：Teachable Machine</h4>
+                    <p>使用 Google 的 Teachable Machine，让孩子们训练一个能识别“石头剪刀布”的模型。让他们亲身体验：机器是通过“看大量图片”学会的，如果图片给错了，机器就会学错（偏见启蒙）。</p>
                 `,
                 source: "ACM K-12 Guidelines"
             },
             "curr_middle": {
                 title: "初中阶段 (6-8)：逻辑与偏见",
                 content: `
-                    <p><strong>核心目标：</strong> 理解机器学习的基本流程。</p>
-                    <p><strong>活动：</strong> 模拟视频推荐算法。讨论：如果数据只来自城市用户，这个模型对农村用户公平吗？引入“算法公平性”概念。</p>
+                    <div class="concept-box"><span class="concept-title">核心目标</span> 理解机器学习流程与社会影响。</div>
+                    <h4>活动建议：算法偏见模拟</h4>
+                    <p>模拟一个“招聘 AI”。给它投喂包含历史性别偏见的数据，看它是否会歧视女性求职者。讨论：数据是如何变成偏见的？如何修复？</p>
                 `,
                 source: "ACM K-12 Guidelines"
             },
             "curr_high": {
                 title: "高中阶段 (9-12)：创造与微调",
                 content: `
-                    <p><strong>核心目标：</strong> 使用 AI 解决复杂现实问题。</p>
-                    <p><strong>活动：</strong> 构建校园心理健康问答机器人。涉及：设计 Prompt、微调模型（RAG）、伦理审查（如何处理极端言论）。这不仅仅是技术课，更是社会学课。</p>
+                    <div class="concept-box"><span class="concept-title">核心目标</span> 使用 AI 解决复杂现实问题。</div>
+                    <h4>活动建议：RAG 应用构建</h4>
+                    <p>构建一个校园专属的问答机器人。涉及：设计 Prompt、挂载知识库 (RAG)、设置伦理护栏（防止回答不当问题）。这整合了技术、伦理和产品思维。</p>
                 `,
                 source: "ACM K-12 Guidelines"
             },
-
-            // CHALLENGES
-            "chal_cheating": {
-                title: "挑战：学术诚信的终结？",
-                content: `
-                    <p>Frontiers 综述明确指出：AI 文本检测器不可靠（误报率高，且容易被绕过）。</p>
-                    <div class="reflection-block">
-                        <div class="reflection-title"><i class="fas fa-sync-alt mr-2"></i>范式转换</div>
-                        <p>我们不应致力于“抓作弊”，而应致力于设计<strong>“无法作弊”</strong>或<strong>“鼓励使用 AI”</strong>的作业。例如：翻转课堂（课外看 AI 视频，课内写作业）、口头答辩、多模态项目制作。</p>
-                    </div>
-                `,
-                source: "Frontiers Systematic Review"
+             // Challenges
+            "chal_cheating": { title: "学术诚信：猫鼠游戏", content: `<p>检测器不可靠（误报率高）。策略：翻转评估（课内手写），或设计“AI 融合”作业（要求标注 AI 使用部分）。</p>`, source: "Frontiers" },
+            "chal_privacy": { title: "数据隐私：围墙花园", content: `<p>必须建立“围墙花园”。使用不训练数据的企业版模型。未来趋势是本地化部署的小模型 (SLM)。</p>`, source: "US Dept of Ed" },
+            "chal_bias": { 
+                title: "算法偏见与审计", 
+                content: `<p>算法可能会基于邮编或姓氏歧视学生。US Dept of Ed 要求：绝不能让算法单独决定升学/分流。高风险决策必须保留<strong>人类审核 (Human Audit)</strong>。</p>`, 
+                source: "US Dept of Ed" 
             },
-            "chal_privacy": {
-                title: "挑战：数据隐私与围墙花园",
+            "chal_divide": { 
+                title: "数字鸿沟 3.0：能力鸿沟", 
                 content: `
-                    <p>学生在使用公共 AI 服务时，可能会泄露 PII（个人身份信息）。</p>
-                    <p><strong>解决方案：</strong> 建立“围墙花园 (Walled Garden)”。使用企业版/教育版 AI 接口，确保数据不用于训练公共模型。未来趋势是<strong>“边缘 AI (Edge AI)”</strong>，即在本地设备上运行小模型，数据不出校园。</p>
-                `,
-                source: "US Dept of Ed / White House Bill of Rights"
+                    <div class="tension-box"><span class="tension-title">马太效应风险</span></div>
+                    <p>1.0 是设备鸿沟，2.0 是网络鸿沟，3.0 是<strong>AI 使用能力鸿沟</strong>。</p>
+                    <p>富裕家庭的孩子通过私教掌握“指挥 AI (Command AI)”的能力，贫困家庭的孩子则被“AI 自动化管理 (Managed by AI)”。公共教育必须提供普惠的 AI 素养课以填平此鸿沟。</p>
+                `, 
+                source: "arXiv / US Dept of Ed" 
             },
-            "chal_bias": {
-                title: "挑战：算法定型 (Stereotyping)",
+            "chal_teacher": { 
+                title: "教师准备度：TPACK 断层", 
                 content: `
-                    <p>如果 AI 根据历史数据预测学生的成功率，它可能会系统性地低估少数族裔或贫困学生。</p>
-                    <p>US Dept of Ed 发出严厉警告：<strong>绝不能让算法自动决定关键教育机会（如分流、录取）。</strong>所有高风险决策必须保留“人类介入 (Human-in-the-loop)”。</p>
-                `,
-                source: "US Dept of Ed"
-            },
-            "chal_divide": {
-                title: "挑战：马太效应 (Mathew Effect)",
-                content: `
-                    <p>以前的鸿沟是“有没有设备”，现在的鸿沟是“AI 资本”。</p>
-                    <p>富裕家庭的孩子由私教指导如何指挥 AI (Command AI)，而贫困家庭的孩子可能被 AI 自动化系统管理 (Managed by AI)。公共教育的责任是确保 AI 素养课程的普及，防止阶层固化。</p>
-                `,
-                source: "arXiv / US Dept of Ed"
-            },
-            "chal_teacher": {
-                title: "挑战：教师准备度断层",
-                content: `
-                    <p>仅 20% 的教师感到有准备。技术迭代速度（周）与教育改革速度（年）存在巨大错配。</p>
-                    <p><strong>TPACK 模型更新：</strong> 教师知识框架需更新，整合 AI 知识（XK）。培训不应只教“怎么用工具”，更要教“AI 如何改变学科教学法 (PCK)”。</p>
-                `,
-                source: "Frontiers Systematic Review"
+                    <p>仅 20% 教师有信心。TPACK（技术-教学-内容知识）模型需更新。</p>
+                    <p>培训不应只教“怎么用 ChatGPT”，更要教“AI 如何改变英语/数学的学科教学法”。例如：翻译软件普及后，外语课应该教文化交流还是死记单词？</p>
+                `, 
+                source: "Frontiers" 
             }
         };
 
         const shiftsData = [
-            { id: "shift_objective", title: "教学目标", from: "记忆与复述", to: "综合与创造", desc: "布鲁姆分类法的倒置：低阶外包，高阶跃升。", icon: "fas fa-bullseye" },
-            { id: "shift_role", title: "教师角色", from: "知识传授者", to: "学习编排者", desc: "从 Sage on Stage 到 Guide on the Side。", icon: "fas fa-user-tie" },
+            { id: "shift_objective", title: "教学目标", from: "记忆与复述", to: "综合与创造", desc: "Bloom 分类法的倒置：AI 负责底层，人类负责顶层。", icon: "fas fa-bullseye" },
+            { id: "shift_role", title: "教师角色", from: "知识传授者", to: "学习编排者", desc: "设计学习体验与情感支持。", icon: "fas fa-user-tie" },
             { id: "shift_assessment", title: "评估方式", from: "终结性产出", to: "过程性记录", desc: "隐形评估与逆向图灵测试。", icon: "fas fa-clipboard-check" },
-            { id: "shift_resources", title: "学习资源", from: "标准化教材", to: "生成式内容", desc: "实时生成的差异化与文化响应性内容。", icon: "fas fa-book-open" }
+            { id: "shift_resources", title: "学习资源", from: "标准化教材", to: "生成式内容", desc: "实时生成的文化响应性内容。", icon: "fas fa-book-open" }
         ];
 
-        // --- Init Logic ---
-        // Force Loader and wait for DOM + Timeout
+        const challengesData = [
+            { id: "chal_cheating", title: "学术诚信", icon: "fas fa-file-excel", color: "red", desc: "检测器失效，评估重构。" },
+            { id: "chal_privacy", title: "数据隐私", icon: "fas fa-user-shield", color: "blue", desc: "PII 泄露与围墙花园。" },
+            { id: "chal_bias", title: "算法偏见", icon: "fas fa-balance-scale-right", color: "purple", desc: "防止算法固化不平等。" },
+            { id: "chal_divide", title: "数字鸿沟 3.0", icon: "fas fa-wifi", color: "green", desc: "从接入差距到能力差距。" },
+            { id: "chal_teacher", title: "TPACK 断层", icon: "fas fa-chalkboard-teacher", color: "orange", desc: "学科教学法的 AI 更新。" }
+        ];
+
+        // --- Init ---
         window.addEventListener('load', () => {
             const loader = document.getElementById('app-loader');
             
-            // Render logic
-            renderShifts();
+            // Render
+            const shiftCont = document.getElementById('shift-container');
+            if(shiftCont) shiftCont.innerHTML = shiftsData.map(s => `
+                <div class="clickable-card bg-white rounded-xl shadow-sm p-4 border-l-4 border-gray-200 hover:border-teal-500 group" onclick="openDetail('${s.id}')">
+                    <div class="flex items-center mb-3">
+                        <i class="${s.icon} text-xl text-teal-600 mr-3"></i>
+                        <h3 class="font-bold text-gray-800">${s.title}</h3>
+                    </div>
+                    <div class="flex justify-between text-xs mb-2 bg-gray-50 p-2 rounded">
+                        <span class="text-gray-400 line-through">${s.from}</span>
+                        <span class="text-teal-700 font-bold">${s.to}</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">${s.desc}</p>
+                </div>`).join('');
+
+            const chalCont = document.getElementById('challenge-container');
+            if(chalCont) chalCont.innerHTML = challengesData.map(c => `
+                <div class="clickable-card bg-white rounded-xl shadow-sm p-4 border border-gray-100 flex items-center" onclick="openDetail('${c.id}')">
+                    <div class="h-10 w-10 bg-${c.color}-50 text-${c.color}-500 rounded-lg flex items-center justify-center mr-3 text-lg"><i class="${c.icon}"></i></div>
+                    <div>
+                        <h3 class="font-bold text-sm text-gray-900">${c.title}</h3>
+                        <p class="text-xs text-gray-500 line-clamp-1">${c.desc}</p>
+                    </div>
+                </div>`).join('');
+
+            // Init Sim
+            updateOffloadingSim(50);
             
-            // Safety timeout for Chart.js on mobile
+            // Charts Safe Init
             setTimeout(() => {
                 renderSentimentChart();
-                
-                // Hide loader
+                renderLiteracyChart();
                 loader.style.opacity = '0';
                 loader.style.visibility = 'hidden';
             }, 800);
         });
 
-        // --- Interaction Logic ---
-        let currentTab = 'overview';
-
+        // --- Nav ---
         function navigate(tabId) {
-            currentTab = tabId;
-            ['overview', 'shifts', 'literacy', 'challenges'].forEach(id => {
+            ['overview', 'simulation', 'shifts', 'literacy', 'challenges'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
                 document.getElementById(`nav-${id}`).classList.remove('active');
             });
             document.getElementById(tabId).classList.remove('hidden');
             document.getElementById(`nav-${tabId}`).classList.add('active');
-
-            if(tabId === 'literacy') setTimeout(renderLiteracyChart, 100);
-
-            const navBtn = document.getElementById(`nav-${tabId}`);
-            if (navBtn) navBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            
+            const btn = document.getElementById(`nav-${tabId}`);
+            if(btn) btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
 
-        function renderShifts() {
-            const container = document.getElementById('shift-container');
-            if(container) {
-                container.innerHTML = shiftsData.map(shift => `
-                    <div class="clickable-card bg-white rounded-xl shadow-sm p-4 border-l-4 border-gray-200 hover:border-teal-500 group" onclick="openDetail('${shift.id}')">
-                        <div class="flex items-center mb-3">
-                            <i class="${shift.icon} text-xl text-teal-600 mr-3 transition-transform group-hover:scale-110"></i>
-                            <h3 class="text-base font-bold text-gray-800">${shift.title}</h3>
-                        </div>
-                        <div class="flex items-center justify-between text-xs mb-3 bg-gray-50 p-2 rounded-lg">
-                            <div class="text-gray-400 line-through decoration-red-300 w-1/2 pr-1 border-r border-gray-200 truncate">${shift.from}</div>
-                            <div class="text-teal-700 font-bold w-1/2 pl-2 text-right truncate">${shift.to}</div>
-                        </div>
-                        <p class="text-xs text-gray-500 line-clamp-2">${shift.desc}</p>
-                        <div class="click-indicator mt-2 text-[10px] text-teal-500 font-medium text-right">展开 ></div>
-                    </div>
-                `).join('');
-            }
-        }
-
-        // Modal Logic
+        // --- Modal ---
         function openDetail(id) {
             const data = reportDetails[id];
             if (!data) return;
-
             const modal = document.getElementById('detailModal');
-            const content = document.getElementById('modalContent');
-            
             document.getElementById('modalTitle').innerText = data.title;
             document.getElementById('modalBody').innerHTML = data.content;
             document.getElementById('modalSource').innerText = "来源: " + data.source;
-
             modal.classList.remove('hidden');
             void modal.offsetWidth;
-            
-            modal.classList.remove('items-end', 'sm:items-center');
-            modal.classList.add('flex'); // Flex to center or bottom align
-
-            content.classList.remove('translate-y-full', 'scale-95', 'opacity-0');
-            content.classList.add('translate-y-0', 'scale-100', 'opacity-100');
-            
+            modal.classList.add('flex');
+            document.getElementById('modalContent').classList.remove('translate-y-full', 'scale-95', 'opacity-0');
+            document.getElementById('modalContent').classList.add('translate-y-0', 'scale-100', 'opacity-100');
             document.body.style.overflow = 'hidden';
         }
-
         function closeModal() {
             const modal = document.getElementById('detailModal');
-            const content = document.getElementById('modalContent');
-            
-            content.classList.remove('translate-y-0', 'scale-100', 'opacity-100');
-            content.classList.add('translate-y-full', 'scale-95', 'opacity-0');
-            
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                document.body.style.overflow = '';
-            }, 300);
+            document.getElementById('modalContent').classList.remove('translate-y-0', 'scale-100', 'opacity-100');
+            document.getElementById('modalContent').classList.add('translate-y-full', 'scale-95', 'opacity-0');
+            setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = ''; }, 300);
         }
-        
-        document.getElementById('detailModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('detailModal')) closeModal();
-        });
+        document.getElementById('detailModal').addEventListener('click', (e) => { if(e.target.id === 'detailModal') closeModal(); });
 
-        // Charts
-        let sentimentChart = null;
-        let literacyChart = null;
-
+        // --- Charts ---
         function renderSentimentChart() {
             const ctxEl = document.getElementById('sentimentChart');
-            if (!ctxEl || sentimentChart) return;
-            
-            const ctx = ctxEl.getContext('2d');
-            sentimentChart = new Chart(ctx, {
+            if (!ctxEl) return;
+            new Chart(ctxEl.getContext('2d'), {
                 type: 'bar',
                 data: {
                     labels: ['省时', '个性化', '参与度', '作弊焦虑', '公平焦虑'],
-                    datasets: [{
-                        data: [85, 78, 65, -60, -45],
-                        backgroundColor: (ctx) => ctx.raw > 0 ? '#38b2ac' : '#f56565',
-                        borderRadius: 4
-                    }]
+                    datasets: [{ data: [85, 78, 65, -60, -45], backgroundColor: c => c.raw > 0 ? '#38b2ac' : '#f56565', borderRadius: 4 }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    indexAxis: 'y',
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { 
-                            ticks: { callback: v => Math.abs(v) + '%', font: {size: 10} },
-                            grid: { color: '#f3f4f6' } 
-                        },
-                        y: { ticks: { font: {size: 11} }, grid: { display: false } }
-                    },
-                    onClick: () => openDetail('chart_sentiment_detail')
-                }
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => Math.abs(v) + '%' } }, y: { grid: { display: false } } }, onClick: () => openDetail('chart_sentiment_detail') }
+            });
+        }
+        function renderLiteracyChart() {
+            const ctxEl = document.getElementById('literacyChart');
+            if (!ctxEl) return;
+            new Chart(ctxEl.getContext('2d'), {
+                type: 'radar',
+                data: {
+                    labels: ['技术原理', '应用能力', '批判思维', '伦理责任', '创造力'],
+                    datasets: [{ label: '权重', data: [20, 30, 25, 20, 15], backgroundColor: 'rgba(56, 178, 172, 0.2)', borderColor: '#38b2ac', pointBackgroundColor: '#38b2ac' }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { r: { ticks: { display: false } } }, onClick: () => openDetail('chart_literacy_detail') }
             });
         }
 
-        function renderLiteracyChart() {
-            const ctxEl = document.getElementById('literacyChart');
-            if (!ctxEl || literacyChart) return;
+        // --- Simulation Logic (Re-declared for Scope) ---
+        function updateOffloadingSim(val) {
+            const v = parseInt(val);
+            const sliderText = document.getElementById('sliderVal');
+            const efficiency = Math.min(100, Math.floor(v * 0.9 + 10)); 
+            let cognitive;
+            
+            // Inverted U-Curve Logic for Learning
+            if (v <= 45) { cognitive = Math.floor(40 + (v * 1.2)); } 
+            else { cognitive = Math.floor(94 - ((v - 45) * 1.5)); }
+            if (cognitive < 10) cognitive = 10;
 
-            const ctx = ctxEl.getContext('2d');
-            literacyChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['技术', '应用', '批判', '伦理', '创造'],
-                    datasets: [{
-                        label: '权重',
-                        data: [20, 30, 25, 20, 15],
-                        backgroundColor: 'rgba(56, 178, 172, 0.2)',
-                        borderColor: '#38b2ac',
-                        pointBackgroundColor: '#38b2ac'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            ticks: { display: false },
-                            pointLabels: { font: {size: 11} }
-                        }
-                    },
-                    plugins: { legend: { display: false } },
-                    onClick: () => openDetail('chart_literacy_detail')
-                }
-            });
+            document.getElementById('effScore').innerText = efficiency;
+            document.getElementById('cogScore').innerText = cognitive;
+            
+            const effBox = document.getElementById('effBox');
+            const cogBox = document.getElementById('cogBox');
+            const feedback = document.getElementById('simFeedback');
+
+            effBox.className = `p-4 rounded-lg text-center border transition-all ${efficiency > 80 ? 'bg-green-50 border-green-200 text-green-700' : 'bg-gray-50 border-gray-200'}`;
+            cogBox.className = `p-4 rounded-lg text-center border transition-all ${cognitive > 80 ? 'bg-blue-50 border-blue-200 text-blue-700' : (cognitive < 40 ? 'bg-red-50 border-red-200 text-red-700' : 'bg-gray-50 border-gray-200')}`;
+
+            if (v < 20) {
+                sliderText.innerText = v + "% (纯人工)";
+                feedback.innerHTML = "<strong>低效区：</strong> 学生完全靠自己。思维深度足够，但耗时极长，容易产生挫败感，且无法接触高阶复杂问题。";
+            } else if (v >= 20 && v <= 60) {
+                sliderText.innerText = v + "% (协作)";
+                feedback.innerHTML = "<strong>学习甜点区 (Sweet Spot)：</strong> 符合“必要困难”理论。AI 承担记忆、检索等低阶负荷，保留逻辑构建和判断等高阶负荷。";
+            } else {
+                sliderText.innerText = v + "% (过度依赖)";
+                feedback.innerHTML = "<strong>认知萎缩区：</strong> AI 完成了思考过程。效率极高，但学生脑神经未受刺激。短期作业满分，长期能力退化。";
+            }
+        }
+        
+        const riskDatabase = {
+            'grading': { title: '自动作文评分', level: 'medium', desc: 'AI 评分提供即时反馈，但可能误判创意或包含偏见。', guardrail: '保留人工复核机制。AI 仅作为“第二意见”。' },
+            'admission': { title: '录取/升学预测', level: 'high', desc: '使用历史数据预测学生未来，极易固化种族和经济不平等。', guardrail: '禁止全自动决策。必须进行算法公平性审计。' },
+            'tutor': { title: '数学/编程辅导', level: 'low', desc: '基于事实的辅导，风险较低，主要在于幻觉。', guardrail: '内容围栏 (Content Guardrails) 限制回答范围。' },
+            'surveillance': { title: '专注度/情绪监控', level: 'critical', desc: '通过摄像头分析学生是否“听讲”，伪科学且侵犯隐私。', guardrail: '建议完全禁止。技术无法通过表情准确判断认知状态。' }
+        };
+
+        function assessRisk(key) {
+            const data = riskDatabase[key];
+            const div = document.getElementById('riskResult');
+            let color = data.level === 'low' ? 'green' : (data.level === 'medium' ? 'yellow' : (data.level === 'high' ? 'orange' : 'red'));
+            div.className = `animate-fade-in mt-4 p-4 rounded-lg border border-${color}-200 bg-${color}-50`;
+            div.innerHTML = `<div class="flex items-center mb-2"><span class="px-2 py-0.5 rounded text-xs font-bold uppercase bg-${color}-200 text-${color}-800 mr-2">${data.level} Risk</span><h4 class="font-bold text-gray-800">${data.title}</h4></div><p class="text-sm text-gray-700 mb-3">${data.desc}</p><div class="text-xs font-bold text-gray-500 uppercase">必需护栏 (Guardrails)</div><p class="text-sm text-${color}-900 font-medium">${data.guardrail}</p>`;
+            div.classList.remove('hidden');
         }
     </script>
 </body>
